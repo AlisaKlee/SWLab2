@@ -1,15 +1,15 @@
 <template>
     <div class="container">
-      <!-- App-Titel -->
+      //Titel
       <h1>HeartWare</h1>
   
-      <!-- Login-Formular -->
+      //Login 
       <div class="form">
         <input v-model="username" placeholder="Username" />
         <input v-model="password" type="password" placeholder="Password" />
       </div>
   
-      <!-- Button-Gruppe -->
+      //Button Gruppe
       <div class="button-group">
         <PrimaryButton label="Login" @click="handleLogin" variant="primary" />
         <PrimaryButton label="Cancel" @click="handleCancel" variant="secondary" />
@@ -37,6 +37,7 @@
       },
       handleCancel() {
         console.log('Cancelled');
+        alert('Cancelled.');
         this.username = '';
         this.password = '';
       }
