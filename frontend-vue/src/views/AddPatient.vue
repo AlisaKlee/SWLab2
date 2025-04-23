@@ -29,11 +29,65 @@
     </div>
 </template>
 
-export default {
+<script>
+  import PrimaryButton from '../components/PrimaryButton.vue';
+  import axios from 'axios';
+
+  export default {
     components : {
         PrimaryButton
-    }
-}
+    },
+    data() {
+        return {
+            firstname: '',
+            lastname: '',
+            dateOfBirth: '',
+            gender: '',                             //ToDo: prüfen ob gender richtig 
+            preExistingCondition: '',
+            medication: ''
+        };
+    },
+    methods: {
+        async handleAdd() {
+            const newPatient = {
+            firstname: this.firstname,
+            lastname: this.lastname,
+            dateOfBirth: this.dateOfBirth,
+            gender: this.gender,
+            preExistingCondition: this.preExistingCondition,
+            medication: this.medication
+            };
+
+            try {
+            const response = await axios.post('http://localhost:8080/api/patients', newPatient);
+            console.log('Added to Server:', response.data), this.firstname, this.lastname;
+            alert('Patient was added sucessfully!');
+
+            this.firstname = '';
+            this.lastname = '';
+            this.gender = '';
+            this.dateOfBirth = '';
+            this.preExistingCondition = '';
+            this.medication = '';
+            } catch (error) {
+            console.error('Error while trying to add patient', error);
+            alert('Error trying to add patient!');
+            }
+        },
+        handleCancel() {
+            console.log('Cancelled');
+            alert('Cancelled.');
+            this.firstname = '';
+            this.lastname = '';
+            this.dateOfBirth = '';
+            this.gender = '';                        //ToDo: prüfen ob gender richtig 
+            this.preExistingCondition = '';
+            this.medication = '';
+        }
+      }
+  };
+</script>
+
 
 <style scoped>
 .container {
