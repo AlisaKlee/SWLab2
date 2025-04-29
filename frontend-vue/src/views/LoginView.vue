@@ -34,7 +34,7 @@
       handleLogin() {
         console.log('Login:', this.username, this.password);
         alert('Logged in!');
-        this.$router.push('/add-patient');      //ToDo: Replace welcome with welcomeRtw/ welcomeHops
+        this.$router.push('/welcome-hospital');      //ToDo: Replace welcome with welcomeRtw/ welcomeHops
       },
       handleCancel() {
         console.log('Cancelled');

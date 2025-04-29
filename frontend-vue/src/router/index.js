@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import LoginView from '../views/LoginView.vue'; 
 import AddPatient from '../views/AddPatient.vue';
+import WelcomeHospView from '../views/WelcomeHospView.vue';
 
 const routes = [
   {
@@ -9,9 +10,14 @@ const routes = [
     component: LoginView
   },
   {
-    path: '/add patient',
+    path: '/add-patient',
     name: 'Add Patient',
     component: AddPatient
+  },
+  {
+    path: '/welcome-hospital',
+    name: 'Welcome hospital',
+    component: WelcomeHospView
   }
 ];
 

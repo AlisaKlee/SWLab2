@@ -1,9 +1,9 @@
 <template>
     <div class="container">
-      //Titel
+      <!--Title-->
       <h1>Add Patient</h1>
   
-      //Eingabefeld 
+      <!--Eingabefeld-->
       <div class="form">
         <input v-model="firstname" placeholder="Firstname" />
         <input v-model="lastname" placeholder="Lastname" />
@@ -13,7 +13,7 @@
         <input v-model="medication" placeholder="Medication" />
       </div>
   
-      //Drow down menu Gender
+      <!--Drow down menu Gender-->
       <select v-model = "gender" >
         <option disabled value = "" >Please select gender> </option>
         <option> Male </option>
@@ -21,7 +21,7 @@
         <option> Other </option>
       </select>
     
-      //Buttons
+      <!--Buttons-->
       <div class="button-group">
         <PrimaryButton label="Add" @click="handleAdd" variant="primary" />
         <PrimaryButton label="Cancel" @click="handleCancel" variant="secondary" />

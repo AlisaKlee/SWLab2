@@ -1,15 +1,15 @@
 <template>
     <div class = "container">
-        //Titel
+        <!--Titel-->
         <h1> Welcome Dr. Schmidt! </h1>
 
-        //Eingabefeld
+        <!--Eingabefeld-->
         <div class = "form">
             <input v-model="showPatient" placeholder="Search for patient" />
         </div>
 
-        //Buttons
-        <div class = "button group" >
+        <!--Buttons-->
+        <div class = "button-group" >
             <PrimaryButton label = "Show all patients" @click="handleShowAllPatients" variant = "primary" />
             <PrimaryButton label = "Add patient" @click="addPatient" variant = "secondary" />
         </div>    
@@ -33,7 +33,7 @@
 
             },
             addPatient() {
-
+              this.$router.push('/add-patient');
             }
         }
     }
