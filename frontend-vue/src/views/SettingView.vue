@@ -31,7 +31,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import DeviceService from '@/services/DeviceService'
+import DeviceService from '@/services/DeviceService.js'
 import heartwareLogo from '@/assets/HeartWareLogo.png'
 
 const oldPassword = ref('')
@@ -50,7 +50,6 @@ const fetchDevice = async () => {
 }
 
 const logout = () => {
-  // Hier echte Logout-Logik einbauen
   console.log('Logged out')
 }
 
