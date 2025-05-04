@@ -12,18 +12,32 @@ const routes = [
   {
     path: '/add-patient',
     name: 'Add Patient',
-    component: AddPatient
+    component: AddPatient,
+    meta: { requiresAuth: true }
   },
   {
     path: '/welcome-hospital',
     name: 'Welcome hospital',
-    component: WelcomeHospView
+    component: WelcomeHospView,
+    meta: { requiresAuth: true }
   }
 ];
 
 const router = createRouter({
   history: createWebHistory(),
   routes
+});
+
+router.beforeEach((to, from, next) => {
+  const isLoggedIn = localStorage.getItem('session') === 'true';
+
+  if (to.meta.requiresAuth && !isLoggedIn) {
+    next('/');
+  } else if (to.path === '/' && isLoggedIn) {
+    next('/welcome-hospital');
+  } else {
+    next();
+  }
 });
 
 export default router;

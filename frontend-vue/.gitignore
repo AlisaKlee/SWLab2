@@ -22,3 +22,20 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Lock-Dateien
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Env-Dateien
+.env
+.env.*
+
+# System- oder Editorreste
+Thumbs.db
+
+# Optional: Build-Output und temporäre Dateien
+*.log
+*.tmp
+*.bak
