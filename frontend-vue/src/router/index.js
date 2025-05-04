@@ -1,7 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import LoginView from '../views/LoginView.vue'; 
+import LoginView from '../views/LoginView.vue';
 import AddPatient from '../views/AddPatient.vue';
 import WelcomeHospView from '../views/WelcomeHospView.vue';
+import PatientList from '../views/PatientList.vue';
+import PatientDetails from '../components/PatientDetails.vue'; 
+import History from '../views/History.vue';
+import SettingView from '../views/SettingView.vue';
 
 const routes = [
   {
@@ -10,15 +14,39 @@ const routes = [
     component: LoginView
   },
   {
+    path: '/welcome-hospital',
+    name: 'WelcomeHospital',
+    component: WelcomeHospView,
+    meta: { requiresAuth: true }
+  },
+  {
     path: '/add-patient',
-    name: 'Add Patient',
+    name: 'AddPatient',
     component: AddPatient,
     meta: { requiresAuth: true }
   },
   {
-    path: '/welcome-hospital',
-    name: 'Welcome hospital',
-    component: WelcomeHospView,
+    path: '/patients',
+    name: 'PatientList',
+    component: PatientList,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/patients/:id',
+    name: 'PatientDetails',
+    component: PatientDetails, 
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/history',
+    name: 'History',
+    component: History,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/settings',
+    name: 'Settings',
+    component: SettingView,
     meta: { requiresAuth: true }
   }
 ];
@@ -28,6 +56,7 @@ const router = createRouter({
   routes
 });
 
+// Navigation Guard für Authentifizierung und Weiterleitung
 router.beforeEach((to, from, next) => {
   const isLoggedIn = localStorage.getItem('session') === 'true';
 

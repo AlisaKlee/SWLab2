@@ -32,7 +32,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import DeviceService from '@/services/DeviceService'
-import heartwareLogo from '@/assets/heartware.png'
+import heartwareLogo from '@/assets/HeartWareLogo.png'
 
 const oldPassword = ref('')
 const newPassword = ref('')
