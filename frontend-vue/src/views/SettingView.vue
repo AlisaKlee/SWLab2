@@ -1,8 +1,7 @@
 <template>
   <div class="p-4">
-    <img :src="heartwareLogo" alt="Heartware Logo" class="mb-4 w-32" />
     <h2 class="text-2xl font-bold mb-4">Settings</h2>
-    <form class="space-y-4">
+    <form class="space-y-4" @submit.prevent>
       <div>
         <label>Old password:</label>
         <input type="password" v-model="oldPassword" class="input" />
@@ -32,7 +31,6 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import DeviceService from '@/services/DeviceService.js'
-import heartwareLogo from '@/assets/HeartWareLogo.png'
 
 const oldPassword = ref('')
 const newPassword = ref('')
@@ -50,10 +48,35 @@ const fetchDevice = async () => {
 }
 
 const logout = () => {
-  console.log('Logged out')
+  localStorage.removeItem('session');
+  window.location.href = '/';
 }
 
 onMounted(() => {
   fetchDevice()
 })
 </script>
+
+<style scoped>
+.input {
+  padding: 12px;
+  font-size: 16px;
+  border: none;
+  background-color: #e6e0e9;
+  border-radius: 6px;
+  width: 100%;
+  margin-bottom: 10px;
+}
+.btn {
+  padding: 10px 24px;
+  background-color:rgb(172, 138, 138);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.btn:hover {
+  background-color: #b71c1c;
+}
+</style>

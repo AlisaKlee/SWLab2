@@ -5,8 +5,6 @@ import WelcomeHospView from '../views/WelcomeHospView.vue';
 import PatientList from '../views/PatientList.vue';
 import PatientDetails from '../components/PatientDetails.vue'; 
 import History from '../views/History.vue';
-import SettingView from '../views/SettingView.vue';
-
 const routes = [
   {
     path: '/',
@@ -41,12 +39,6 @@ const routes = [
     path: '/history',
     name: 'History',
     component: History,
-    meta: { requiresAuth: true }
-  },
-  {
-    path: '/settings',
-    name: 'Settings',
-    component: SettingView,
     meta: { requiresAuth: true }
   }
 ];
