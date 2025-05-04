@@ -1,5 +1,6 @@
 <template>
   <div class="p-4">
+    <img :src="heartwareLogo" alt="Heartware Logo" class="mb-4 w-32" />
     <h2 class="text-2xl font-bold mb-4">Settings</h2>
     <form class="space-y-4">
       <div>
@@ -31,6 +32,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import DeviceService from '@/services/DeviceService'
+import heartwareLogo from '@/assets/heartware.png'
 
 const oldPassword = ref('')
 const newPassword = ref('')
