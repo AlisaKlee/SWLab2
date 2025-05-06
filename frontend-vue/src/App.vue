@@ -1,6 +1,8 @@
 <template>
   <div class="flex">
-    <SideBar v-if="route.path !== '/login'" />
+    <!-- Sidebar nur anzeigen, wenn NICHT auf der Login-Seite -->
+    <Sidebar v-if="route.path !== '/'" />
+
     <div class="flex-1">
       <router-view />
     </div>
@@ -9,6 +11,7 @@
 
 <script setup>
 import { useRoute } from 'vue-router'
-import SideBar from './components/SideBar.vue'
+import Sidebar from './components/Sidebar.vue'
+
 const route = useRoute()
 </script>

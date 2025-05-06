@@ -1,15 +1,18 @@
 <template>
   <div class="container">
+    <!-- Logo oben rechts, aber nicht in der Ecke "verloren" -->
+    <img src="../assets/HeartWareLogo.png" alt="HeartWare Logo" class="logo-top-right" />
+
     <!-- Titel -->
     <h1>HeartWare</h1>
 
-    <!-- Login -->
+    <!-- Loginformular -->
     <div class="form">
       <input v-model="username" placeholder="Username" />
       <input v-model="password" type="password" placeholder="Password" />
     </div>
 
-    <!-- Button Gruppe -->
+    <!-- Buttons -->
     <div class="button-group">
       <PrimaryButton label="Login" @click="handleLogin" variant="primary" />
       <PrimaryButton label="Cancel" @click="handleCancel" variant="secondary" />
@@ -21,24 +24,25 @@
 import PrimaryButton from '../components/PrimaryButton.vue';
 
 export default {
+  name: "LoginView",
   components: {
     PrimaryButton
   },
   data() {
     return {
-      username: '',
-      password: ''
+      username: "",
+      password: ""
     };
   },
   methods: {
     handleLogin() {
-      localStorage.setItem('session', 'true');
-      alert('Logged in!');
-      this.$router.push('/welcome-hospital');  //ToDo: Replace welcome with welcomeRtw/ welcomeHops
+      console.log("Login mit", this.username, this.password);
+      localStorage.setItem("session", "true");
+      this.$router.push("/welcome-hospital");
     },
     handleCancel() {
-      this.username = '';
-      this.password = '';
+      this.username = "";
+      this.password = "";
     }
   }
 };
@@ -46,36 +50,59 @@ export default {
 
 <style scoped>
 .container {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 50px;
+  justify-content: center; /* zentriert vertikal */
+  height: 100vh;
+  padding: 2rem;
+  background-color: #f5f8fa;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  overflow: hidden;
+}
+
+.logo-top-right {
+  position: absolute;
+  top: 40px;
+  right: 60px; /* weiter nach innen */
+  width: 180px; /* größer */
+  height: auto;
+  z-index: 10;
+  opacity: 0.95;
 }
 
 h1 {
-  font-size: 36px;
-  font-weight: bold;
-  margin-bottom: 40px;
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  color: #1a1a1a;
 }
 
 .form {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 1rem;
   width: 300px;
 }
 
 input {
   padding: 12px;
-  font-size: 16px;
-  border: none;
-  background-color: #e6e0e9;
-  border-radius: 6px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: white;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+input:focus {
+  border-color: #007bff;
 }
 
 .button-group {
+  margin-top: 1.5rem;
   display: flex;
-  gap: 20px;
-  margin-top: 30px;
+  gap: 1rem;
+  justify-content: center;
 }
 </style>
