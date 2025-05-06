@@ -2,9 +2,10 @@ import { createRouter, createWebHistory } from 'vue-router';
 import LoginView from '../views/LoginView.vue';
 import AddPatient from '../views/AddPatient.vue';
 import WelcomeHospView from '../views/WelcomeHospView.vue';
-import PatientList from '../views/PatientList.vue';
-import PatientDetails from '../components/PatientDetails.vue'; 
+import PatientList from '../views/PatientList.vue'
+import PatientDetails from '../components/PatientDetails.vue';
 import History from '../views/History.vue';
+
 const routes = [
   {
     path: '/',
@@ -24,21 +25,21 @@ const routes = [
     meta: { requiresAuth: true }
   },
   {
-    path: '/patients',
-    name: 'PatientList',
-    component: PatientList,
-    meta: { requiresAuth: true }
-  },
-  {
     path: '/patients/:id',
     name: 'PatientDetails',
-    component: PatientDetails, 
+    component: PatientDetails,
     meta: { requiresAuth: true }
   },
   {
     path: '/history',
     name: 'History',
     component: History,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/patient-list',
+    name: 'PatientList',
+    component: PatientList,
     meta: { requiresAuth: true }
   }
 ];
@@ -48,7 +49,6 @@ const router = createRouter({
   routes
 });
 
-// Navigation Guard für Authentifizierung und Weiterleitung
 router.beforeEach((to, from, next) => {
   const isLoggedIn = localStorage.getItem('session') === 'true';
 

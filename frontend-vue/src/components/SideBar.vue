@@ -1,19 +1,14 @@
 <template>
-  <div class="h-screen w-64 bg-green-200 text-black flex flex-col">
-    <nav class="flex-1 p-4 space-y-4">
-      <router-link to="/patients" class="flex items-center gap-3 block hover:bg-green-300 p-2 rounded">
-        <i class="pi pi-users text-xl"></i>
-        <span>Patienten</span>
+  <div class="h-screen w-16 bg-white border-r shadow-md flex flex-col items-center justify-center space-y-6">
+    <router-link to="/welcome-hospital" class="icon-link" title="Home">
+      <i class="pi pi-home text-2xl"></i>
       </router-link>
-      <router-link to="/history" class="flex items-center gap-3 block hover:bg-green-300 p-2 rounded">
-        <i class="pi pi-history text-xl"></i>
-        <span>Verlauf</span>
+    <router-link to="/settings" class="icon-link" title="Einstellungen">
+      <i class="pi pi-cog text-2xl"></i>
       </router-link>
-      <router-link to="/settings" class="flex items-center gap-3 block hover:bg-green-300 p-2 rounded">
-        <i class="pi pi-cog text-xl"></i>
-        <span>Einstellungen</span>
+    <router-link to="/" class="icon-link" title="Logout">
+      <i class="pi pi-sign-out text-2xl"></i>
       </router-link>
-    </nav>
   </div>
 </template>
 
@@ -21,8 +16,21 @@
 </script>
 
 <style scoped>
+.icon-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 0.5rem;
+  transition: background-color 0.2s;
+}
+
+.icon-link:hover {
+  background-color: #d1fae5; /* hellgrün für hover */
+}
+
 .router-link-active {
-  background-color: rgba(106, 245, 189, 0.94); 
-  font-weight: bold;
+  background-color: #6af5bd;
 }
 </style>

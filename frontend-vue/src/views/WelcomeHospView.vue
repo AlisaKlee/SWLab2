@@ -1,17 +1,25 @@
 <template>
   <div class="container">
-    <!--Titel + Logout-->
+    <!-- Logo oben -->
+    <div class="logo-container">
+      <img :src="logo" alt="HeartWare Logo" class="logo-image" />
+    </div>
+
+    <!-- Sidebar links -->
+    <Sidebar />
+
+    <!-- Headerbereich -->
     <div class="header">
       <h1>Welcome Dr. Schmidt!</h1>
       <button class="logout-button" @click="logout">Logout</button>
     </div>
 
-    <!--Eingabefeld-->
+    <!-- Patientensuche -->
     <div class="form">
       <input v-model="showPatient" placeholder="Search for patient" />
     </div>
 
-    <!--Buttons-->
+    <!-- Buttons -->
     <div class="button-group">
       <PrimaryButton label="Show all patients" @click="handleShowAllPatients" variant="primary" />
       <PrimaryButton label="Add patient" @click="addPatient" variant="secondary" />
@@ -21,26 +29,30 @@
 
 <script>
 import PrimaryButton from '../components/PrimaryButton.vue';
+import Sidebar from '../components/Sidebar.vue';
+import logo from '../assets/HeartWareLogo.png'; // ← KEIN Alias – absolut sicher
 
 export default {
   components: {
-    PrimaryButton
+    PrimaryButton,
+    Sidebar
   },
   data() {
     return {
-      showPatient: ''
+      showPatient: '',
+      logo
     };
   },
   methods: {
     handleShowAllPatients() {
-      // später implementieren
+      // Noch zu implementieren
     },
     addPatient() {
       this.$router.push('/add-patient');
     },
     logout() {
-      localStorage.removeItem('session'); // Session löschen
-      this.$router.push('/'); // zurück zur Login-Seite
+      localStorage.removeItem('session');
+      this.$router.push('/');
     }
   }
 };
@@ -54,12 +66,25 @@ export default {
   margin-top: 50px;
 }
 
+.logo-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.logo-image {
+  width: 100px;
+  height: auto;
+}
+
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 90%;
   max-width: 600px;
+  margin-bottom: 20px;
 }
 
 .logout-button {
@@ -75,7 +100,7 @@ export default {
 h1 {
   font-size: 36px;
   font-weight: bold;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
 }
 
 .form {
@@ -83,6 +108,7 @@ h1 {
   flex-direction: column;
   gap: 20px;
   width: 300px;
+  margin-bottom: 30px;
 }
 
 input {
