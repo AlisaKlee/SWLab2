@@ -1,10 +1,15 @@
 import { createRouter, createWebHistory } from 'vue-router';
+
+// Views
 import LoginView from '../views/LoginView.vue';
 import AddPatient from '../views/AddPatient.vue';
 import WelcomeHospView from '../views/WelcomeHospView.vue';
-import PatientList from '../views/PatientList.vue'
-import PatientDetails from '../components/PatientDetails.vue';
+import PatientList from '../views/PatientList.vue';
 import History from '../views/History.vue';
+import SettingView from '../views/SettingView.vue'; // ✅ Singular
+
+// Components
+import PatientDetails from '../components/PatientDetails.vue';
 
 const routes = [
   {
@@ -40,6 +45,12 @@ const routes = [
     path: '/patient-list',
     name: 'PatientList',
     component: PatientList,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/settings', // ✅ Pfad bleibt plural
+    name: 'Settings',
+    component: SettingView, // ✅ Komponente ist Singular
     meta: { requiresAuth: true }
   }
 ];

@@ -1,82 +1,98 @@
 <template>
-  <div class="p-4">
-    <h2 class="text-2xl font-bold mb-4">Settings</h2>
-    <form class="space-y-4" @submit.prevent>
-      <div>
-        <label>Old password:</label>
-        <input type="password" v-model="oldPassword" class="input" />
-      </div>
-      <div>
-        <label>New password:</label>
-        <input type="password" v-model="newPassword" class="input" />
-      </div>
-      <div>
-        <label>Change language:</label>
-        <select v-model="language" class="input">
-          <option value="en">English</option>
-          <option value="de">Deutsch</option>
-        </select>
-      </div>
-      <div>
-        <label>Device:</label>
-        <p>{{ device.deviceName }}</p>
-        <p>Status: {{ device.connectionStatus }}</p>
-        <p>Last updated: {{ device.timestamp }}</p>
-      </div>
-      <button type="button" class="btn" @click="logout">Logout</button>
-    </form>
+  <div class="settings-view">
+    <h2>Settings</h2>
+
+    <section>
+      <h3>Change Password</h3>
+      <input type="password" v-model="oldPassword" placeholder="Old password" />
+      <input type="password" v-model="newPassword" placeholder="New password" />
+      <button @click="changePassword">Change</button>
+      <button @click="cancelPasswordChange">Cancel</button>
+    </section>
+
+    <section>
+      <h3>Device Settings</h3>
+      <p><strong>Device name:</strong> Raspberry Pi (1)</p>
+      <p><strong>Connection:</strong> Stable</p>
+      <p><strong>Timestamp:</strong> {{ currentTime }}</p>
+    </section>
+
+    <section>
+      <h3>Change Language</h3>
+      <select v-model="language">
+        <option value="en">English</option>
+        <option value="de">Deutsch</option>
+      </select>
+    </section>
+
+    <button @click="logout" class="logout-button">Logout</button>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
-import DeviceService from '@/services/DeviceService.js'
+import { ref, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
 
-const oldPassword = ref('')
-const newPassword = ref('')
-const language = ref('en')
+const oldPassword = ref('');
+const newPassword = ref('');
+const language = ref('en');
+const currentTime = ref('');
+const router = useRouter();
 
-const device = ref({
-  deviceName: '',
-  connectionStatus: '',
-  timestamp: ''
-})
+const changePassword = () => {
+  alert('Password changed (Platzhalter)');
+};
 
-const fetchDevice = async () => {
-  const result = await DeviceService.getDeviceStatus()
-  device.value = result
-}
+const cancelPasswordChange = () => {
+  oldPassword.value = '';
+  newPassword.value = '';
+};
 
 const logout = () => {
   localStorage.removeItem('session');
-  window.location.href = '/';
-}
+  router.push('/');
+};
 
 onMounted(() => {
-  fetchDevice()
-})
+  const now = new Date();
+  currentTime.value = now.toLocaleString();
+});
 </script>
 
 <style scoped>
-.input {
-  padding: 12px;
-  font-size: 16px;
-  border: none;
-  background-color: #e6e0e9;
-  border-radius: 6px;
-  width: 100%;
-  margin-bottom: 10px;
+.settings-view {
+  padding: 2rem;
+  max-width: 600px;
+  margin: auto;
+  font-family: Arial, sans-serif;
 }
-.btn {
-  padding: 10px 24px;
-  background-color:rgb(172, 138, 138);
-  color: white;
-  border: none;
-  border-radius: 6px;
-  font-weight: bold;
+
+h2 {
+  text-align: center;
+}
+
+section {
+  margin-bottom: 2rem;
+}
+
+input,
+select {
+  display: block;
+  margin: 0.5rem 0;
+  padding: 0.5rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+button {
+  padding: 0.5rem 1rem;
+  margin-right: 0.5rem;
   cursor: pointer;
 }
-.btn:hover {
-  background-color: #b71c1c;
+
+.logout-button {
+  background-color: #d9534f;
+  color: white;
+  border: none;
 }
 </style>

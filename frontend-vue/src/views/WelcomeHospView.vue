@@ -1,41 +1,36 @@
 <template>
-  <div class="container">
-    <!-- Logo oben -->
+  <div class="main-content">
+    <!-- Logo oben rechts -->
     <div class="logo-container">
       <img :src="logo" alt="HeartWare Logo" class="logo-image" />
     </div>
 
-    <!-- Sidebar links -->
-    <Sidebar />
+    <!-- Inhalt mittig zur Sidebar-Höhe -->
+    <div class="content">
+      <div class="header">
+        <h1>Welcome Dr. Schmidt!</h1>
+        <button class="logout-button" @click="logout">Logout</button>
+      </div>
 
-    <!-- Headerbereich -->
-    <div class="header">
-      <h1>Welcome Dr. Schmidt!</h1>
-      <button class="logout-button" @click="logout">Logout</button>
-    </div>
+      <div class="form">
+        <input v-model="showPatient" placeholder="Search for patient" />
+      </div>
 
-    <!-- Patientensuche -->
-    <div class="form">
-      <input v-model="showPatient" placeholder="Search for patient" />
-    </div>
-
-    <!-- Buttons -->
-    <div class="button-group">
-      <PrimaryButton label="Show all patients" @click="handleShowAllPatients" variant="primary" />
-      <PrimaryButton label="Add patient" @click="addPatient" variant="secondary" />
+      <div class="button-group">
+        <PrimaryButton label="Show all patients" @click="handleShowAllPatients" variant="primary" />
+        <PrimaryButton label="Add patient" @click="addPatient" variant="secondary" />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import PrimaryButton from '../components/PrimaryButton.vue';
-import Sidebar from '../components/Sidebar.vue';
-import logo from '../assets/HeartWareLogo.png'; // ← KEIN Alias – absolut sicher
+import logo from '../assets/HeartWareLogo.png';
 
 export default {
   components: {
-    PrimaryButton,
-    Sidebar
+    PrimaryButton
   },
   data() {
     return {
@@ -45,7 +40,7 @@ export default {
   },
   methods: {
     handleShowAllPatients() {
-      // Noch zu implementieren
+      // Platzhalter
     },
     addPatient() {
       this.$router.push('/add-patient');
@@ -59,34 +54,51 @@ export default {
 </script>
 
 <style scoped>
-.container {
+.main-content {
+  position: relative;
+  background-color: #fcfcfc;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  margin-top: 50px;
+  padding-left: 80px; /* Platz für Sidebar */
 }
 
+/* Logo oben rechts – größer */
 .logo-container {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  margin-bottom: 20px;
+  position: absolute;
+  top: 1rem;
+  right: 2rem;
 }
 
 .logo-image {
-  width: 100px;
+  width: 150px;
   height: auto;
 }
 
-.header {
+/* Inhalt auf Höhe der Sidebar-Icons */
+.content {
+  margin-top: 25vh; /* ⬅️ orientiert sich an Sidebar-Mitte */
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
-  width: 90%;
-  max-width: 600px;
-  margin-bottom: 20px;
 }
 
+/* Titel + Logout nebeneinander */
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+h1 {
+  font-size: 36px;
+  font-weight: bold;
+  margin: 0;
+}
+
+/* Logout-Button */
 .logout-button {
   padding: 8px 16px;
   background-color: #d32f2f;
@@ -97,12 +109,7 @@ export default {
   cursor: pointer;
 }
 
-h1 {
-  font-size: 36px;
-  font-weight: bold;
-  margin-bottom: 20px;
-}
-
+/* Eingabefeld */
 .form {
   display: flex;
   flex-direction: column;
@@ -119,6 +126,7 @@ input {
   border-radius: 6px;
 }
 
+/* Button-Gruppe */
 .button-group {
   display: flex;
   gap: 20px;
