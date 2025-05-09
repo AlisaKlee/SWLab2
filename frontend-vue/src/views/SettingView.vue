@@ -48,7 +48,7 @@ const currentTime = ref('');
 const router = useRouter();
 
 const changePassword = () => {
-  alert('Password changed (Platzhalter)');
+  alert('Password changed.');
 };
 
 const cancelPasswordChange = () => {

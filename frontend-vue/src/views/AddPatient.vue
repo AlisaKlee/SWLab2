@@ -12,15 +12,17 @@
         <input v-model="preExistingCondition" placeholder="Pre existing condition" />
         <input v-model="medication" placeholder="Medication" />
       </div>
-  
-      <!--Drow down menu Gender-->
-      <select v-model = "gender" >
-        <option disabled value = "" >Please select gender> </option>
-        <option> Male </option>
-        <option> Female </option>  
-        <option> Other </option>
+
+      <!-- Dropdown Gender -->
+    <section class="dropdown-section">
+      <select v-model="gender" class="input-field">
+        <option disabled value="">Gender</option>
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+        <option value="other">Other</option>
       </select>
-    
+    </section>
+
       <!--Buttons-->
       <div class="button-group">
         <PrimaryButton label="Add" @click="handleAdd" variant="primary" />
@@ -29,63 +31,55 @@
     </div>
 </template>
 
-<script>
-  import PrimaryButton from '../components/PrimaryButton.vue';
-  import axios from 'axios';
+<script setup>
+import { ref } from 'vue';
+import axios from 'axios';
+import PrimaryButton from '../components/PrimaryButton.vue';
 
-  export default {
-    components : {
-        PrimaryButton
-    },
-    data() {
-        return {
-            firstname: '',
-            lastname: '',
-            dateOfBirth: '',
-            gender: '',                             //ToDo: prüfen ob gender richtig 
-            preExistingCondition: '',
-            medication: ''
-        };
-    },
-    methods: {
-        async handleAdd() {
-            const newPatient = {
-            firstname: this.firstname,
-            lastname: this.lastname,
-            dateOfBirth: this.dateOfBirth,
-            gender: this.gender,
-            preExistingCondition: this.preExistingCondition,
-            medication: this.medication
-            };
+const firstname = ref('');
+const lastname = ref('');
+const dateOfBirth = ref('');
+const gender = ref('');
+const preExistingCondition = ref('');
+const medication = ref('');
 
-            try {
-            const response = await axios.post('http://localhost:8080/api/patients', newPatient);
-            console.log('Added to Server:', response.data), this.firstname, this.lastname;
-            alert('Patient was added sucessfully!');
-
-            this.firstname = '';
-            this.lastname = '';
-            this.gender = '';
-            this.dateOfBirth = '';
-            this.preExistingCondition = '';
-            this.medication = '';
-            } catch (error) {
-            console.error('Error while trying to add patient', error);
-            alert('Error trying to add patient!');
-            }
-        },
-        handleCancel() {
-            console.log('Cancelled');
-            alert('Cancelled.');
-            this.firstname = '';
-            this.lastname = '';
-            this.dateOfBirth = '';
-            this.gender = '';                        //ToDo: prüfen ob gender richtig 
-            this.preExistingCondition = '';
-            this.medication = '';
-        }
-      }
+const handleAdd = async () => {
+  const newPatient = {
+    firstname: firstname.value,
+    lastname: lastname.value,
+    dateOfBirth: dateOfBirth.value,
+    gender: gender.value,
+    preExistingCondition: preExistingCondition.value,
+    medication: medication.value
   };
+
+  try {
+    const response = await axios.post('http://localhost:8080/api/patients', newPatient);
+    console.log('Added to Server:', response.data);
+    alert('Patient was added successfully!');
+
+    firstname.value = '';
+    lastname.value = '';
+    dateOfBirth.value = '';
+    gender.value = '';
+    preExistingCondition.value = '';
+    medication.value = '';
+  } catch (error) {
+    console.error('Error while trying to add patient', error);
+    alert('Error trying to add patient!');
+  }
+};
+
+const handleCancel = () => {
+  console.log('Cancelled');
+  alert('Cancelled.');
+  firstname.value = '';
+  lastname.value = '';
+  dateOfBirth.value = '';
+  gender.value = '';
+  preExistingCondition.value = '';
+  medication.value = '';
+};
 </script>
 
 
@@ -116,6 +110,29 @@ input {
   border: none;
   background-color: #e6e0e9;
   border-radius: 6px;
+}
+
+.input-field {
+  padding: 12px;
+  font-size: 16px;
+  width: 100%;
+  border: 1px solid #ccc;
+  background-color: #e6e0e9;
+  border-radius: 8px;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+
+.section-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.dropdown-section {
+  width: 300px;
+  margin-top: 20px;
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
 }
 
 .button-group {
