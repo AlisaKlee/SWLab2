@@ -1,9 +1,10 @@
 <template>
-  <div class="flex">
-    <!-- Sidebar nur anzeigen, wenn NICHT auf der Login-Seite -->
+  <div class="app-layout">
+    <!-- Sidebar anzeigen, außer auf Login-Seite -->
     <Sidebar v-if="route.path !== '/'" />
 
-    <div class="flex-1">
+    <!-- Hauptinhalt (gerendert über router-view) -->
+    <div class="main-area">
       <router-view />
     </div>
   </div>
@@ -15,3 +16,16 @@ import Sidebar from './components/Sidebar.vue'
 
 const route = useRoute()
 </script>
+
+<style scoped>
+.app-layout {
+  display: flex;
+  min-height: 100vh;
+  background-color: #fcfcfc; /* Logo-Hintergrundfarbe */
+}
+
+.main-area {
+  flex: 1;
+  padding: 2rem;
+}
+</style>
