@@ -1,54 +1,58 @@
 <template>
   <div class="main-content">
-    <!-- Logo oben rechts -->
-    <div class="logo-container">
-      <img :src="logo" alt="HeartWare Logo" class="logo-image" />
-    </div>
+    <Sidebar />
+    <img src="../assets/HeartWareLogo.png" alt="HeartWare Logo" class="logo" />
 
-    <!-- Inhalt mittig zur Sidebar-Höhe -->
     <div class="content">
-      <div class="header">
-        <h1>Welcome Dr. Schmidt!</h1>
-        <button class="logout-button" @click="logout">Logout</button>
-      </div>
+      <h1 class="title">Willkommen Dr. Schmidt!</h1>
 
       <div class="form">
-        <input v-model="showPatient" placeholder="Search for patient" />
+        <input v-model="search" placeholder="Patient suchen" @keyup.enter="handleSearch" />
       </div>
 
       <div class="button-group">
-        <PrimaryButton label="Show all patients" @click="handleShowAllPatients" variant="primary" />
-        <PrimaryButton label="Add patient" @click="addPatient" variant="secondary" />
+        <PrimaryButton label="Alle Patienten anzeigen" @click="showAllPatients" variant="primary" />
+        <PrimaryButton label="Patient hinzufügen" @click="addPatient" variant="secondary" />
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import Sidebar from '../components/Sidebar.vue';
 import PrimaryButton from '../components/PrimaryButton.vue';
-import logo from '../assets/HeartWareLogo.png';
 
 export default {
+  name: 'WelcomeDoctorView',
   components: {
+    Sidebar,
     PrimaryButton
   },
   data() {
     return {
-      showPatient: '',
-      logo
+      search: ''
     };
   },
   methods: {
-    handleShowAllPatients() {
+    handleSearch() {
+      const mockPatients = [
+        { id: 1, name: 'Max Mustermann' },
+        { id: 2, name: 'Sarah Mayer' }
+      ];
+      const match = mockPatients.find(p =>
+        p.name.toLowerCase().includes(this.search.toLowerCase())
+      );
+      if (match) {
+        this.$router.push(`/patients/${match.id}`);
+      } else {
+        alert('Patient nicht gefunden.');
+      }
+    },
+    showAllPatients() {
       this.$router.push('/patient-list');
     },
     addPatient() {
       this.$router.push('/add-patient');
-    },
-    logout() {
-      localStorage.removeItem('session');
-      localStorage.removeItem('role');
-      this.$router.push('/');
     }
   }
 };
@@ -56,75 +60,51 @@ export default {
 
 <style scoped>
 .main-content {
-  position: relative;
-  background-color: #fcfcfc;
-  min-height: 100vh;
   display: flex;
-  flex-direction: column;
-  padding-left: 80px; 
+  background-color: #fafafa;
+  min-height: 100vh;
+  position: relative;
 }
 
-.logo-container {
+.logo {
   position: absolute;
   top: 1rem;
   right: 2rem;
-}
-
-.logo-image {
   width: 150px;
-  height: auto;
+  opacity: 0.95;
 }
 
 .content {
-  margin-top: 25vh; 
+  margin-left: 64px;
+  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  padding: 2rem;
 }
 
-.header {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 2rem;
+.title {
+  font-size: 2rem;
+  font-weight: bold;
   margin-bottom: 2rem;
 }
 
-h1 {
-  font-size: 36px;
-  font-weight: bold;
-  margin: 0;
-}
-
-.logout-button {
-  padding: 8px 16px;
-  background-color: #d32f2f;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
 .form {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+  margin-bottom: 1.5rem;
   width: 300px;
-  margin-bottom: 30px;
 }
 
 input {
+  width: 100%;
   padding: 12px;
-  font-size: 16px;
-  border: none;
-  background-color: #e6e0e9;
   border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 16px;
 }
 
 .button-group {
   display: flex;
-  gap: 20px;
-  margin-top: 30px;
+  gap: 1rem;
 }
 </style>

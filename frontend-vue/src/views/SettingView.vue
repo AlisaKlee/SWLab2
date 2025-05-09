@@ -1,27 +1,32 @@
 <template>
   <div class="settings-view">
-    <h2 class>Settings</h2>
+ 
+    <div class="logo-container">
+      <img :src="logo" alt="HeartWare Logo" class="logo-image" />
+    </div>
+
+    <h2 class="main-title">Settings</h2>
 
     <section>
-      <h3 class>Change Password</h3>
-        <input
-          type="password"
-          v-model="oldPassword"
-          placeholder="Old password"
-          class="input-field"
-        />
-        <input
-          type="password"
-          v-model="newPassword"
-          placeholder="New password"
-          class="input-field"
-        />
-        <div class="button-group">
-          <button @click="changePassword" class="btn btn-primary">Change</button>
-          <button @click="cancelPasswordChange" class="btn btn-secondary">Cancel</button>          
-        </div>
+      <h3 class="section-title">Change Password</h3>
+      <input
+        type="password"
+        v-model="oldPassword"
+        placeholder="Old password"
+        class="input-field"
+      />
+      <input
+        type="password"
+        v-model="newPassword"
+        placeholder="New password"
+        class="input-field"
+      />
+      <div class="button-group">
+        <button @click="changePassword" class="btn btn-primary">Change</button>
+        <button @click="cancelPasswordChange" class="btn btn-secondary">Cancel</button>
+      </div>
     </section>
-    
+
     <section>
       <h3 class="section-title">Device Settings</h3>
       <button @click="goToDevice" class="btn btn-primary">Open Device Settings</button>
@@ -40,6 +45,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
+import logo from '../assets/HeartWareLogo.png'; 
 
 const oldPassword = ref('');
 const newPassword = ref('');
@@ -58,7 +64,7 @@ const cancelPasswordChange = () => {
 
 const goToDevice = () => {
   router.push('/device');
-}
+};
 
 onMounted(() => {
   const now = new Date();
@@ -72,8 +78,22 @@ onMounted(() => {
   max-width: 600px;
   margin: auto;
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  position: relative;
 }
 
+.logo-container {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+}
+
+.logo-image {
+  width: 120px;
+  height: auto;
+  opacity: 0.95;
+}
+
+/* Titel */
 .main-title {
   text-align: center;
   font-size: 2.5rem;
@@ -126,11 +146,5 @@ section {
 .btn-secondary {
   background-color: #e0e0e0;
   color: #000;
-}
-
-.logout-button {
-  background-color: #d9534f;
-  color: white;
-  margin-top: 2rem;
 }
 </style>

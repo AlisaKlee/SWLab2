@@ -1,138 +1,111 @@
 <template>
-    <div class="container">
-      <!--Titel + Logout-->
-      <div class="header">
-        <h1>Welcome Team 1!</h1>
-        <button class="logout-button" @click="logout">Logout</button>
-      </div>
-  
-      <!--Eingabefeld-->
+  <div class="main-content">
+    <Sidebar />
+    <img src="../assets/HeartWareLogo.png" alt="HeartWare Logo" class="logo" />
+
+    <div class="content">
+      <h1 class="title">Willkommen Team 1!</h1>
+
       <div class="form">
-        <input v-model="showPatient" placeholder="Search for patient" @keyup.enter="goToPatientView"/>
+        <input v-model="search" placeholder="Patient suchen" @keyup.enter="handleSearch" />
       </div>
-  
-      <!--Buttons-->
+
       <div class="button-group">
-        <PrimaryButton label="Show all patients" @click="handleShowAllPatients" variant="primary" />
-        <PrimaryButton label="Add patient" @click="addPatient" variant="secondary" />
+        <PrimaryButton label="Alle Patienten anzeigen" @click="showAllPatients" variant="primary" />
+        <PrimaryButton label="Patient hinzufügen" @click="addPatient" variant="secondary" />
       </div>
     </div>
-  </template>
-  
-  <script>
-  import PrimaryButton from '../components/PrimaryButton.vue';
-  
-  export default {
-    components: {
-      PrimaryButton
-    },
-    data() {
-      return {
-        showPatient: ''
-      };
-    },
-    /**methods: {
-      goToPatientView() {
-      if (this.showPatient.trim() !== '') {
-        this.$router.push({
-          name: 'PatientView',
-          query: { search: this.showPatient.trim() }
-        });
-      } 
-      },
-      addPatient() {
-        this.$router.push('/add-patient');
-      },
-      logout() {
-        localStorage.removeItem('session'); // Session löschen
-        this.$router.push('/'); // zurück zur Login-Seite
-      } */
-  
-      methods: {
-        handleSearch() {
-          const mockPatients = [
-            { id: 1, name: 'Max Mustermann' },
-            { id: 2, name: 'Laura Köhler' },
-            { id: 3, name: 'Sarah Mayer' },
-            { id: 4, name: 'Tom Maier' },
-            { id: 5, name: 'Lisa Kurz' },
-            { id: 6, name: 'Hildegard Slotta' }
-          ];
-  
-          const match = mockPatients.find(p =>
-            p.name.toLowerCase().includes(this.showPatient.toLowerCase())
-          );
-  
-          if (match) {
-            this.$router.push(`/patients/${match.id}/view`);
-          } else {
-            alert('Patient not found.');
-          }
-        },
-        handleShowAllPatients() {
-          this.$router.push('/patient-list');
-        },
-        addPatient() {
-          this.$router.push('/add-patient');
-        },
-        logout() {
-          localStorage.removeItem('session');
-          this.$router.push('/');
-        }
-      }
+  </div>
+</template>
+
+<script>
+import Sidebar from '../components/Sidebar.vue';
+import PrimaryButton from '../components/PrimaryButton.vue';
+
+export default {
+  name: 'WelcomeParamedicView',
+  components: {
+    Sidebar,
+    PrimaryButton
+  },
+  data() {
+    return {
+      search: ''
     };
-  </script>
-  
-  <style scoped>
-  .container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 50px;
+  },
+  methods: {
+    handleSearch() {
+      const mockPatients = [
+        { id: 3, name: 'Tom Maier' },
+        { id: 4, name: 'Lisa Kurz' }
+      ];
+      const match = mockPatients.find(p =>
+        p.name.toLowerCase().includes(this.search.toLowerCase())
+      );
+      if (match) {
+        this.$router.push(`/patients/${match.id}`);
+      } else {
+        alert('Patient nicht gefunden.');
+      }
+    },
+    showAllPatients() {
+      this.$router.push('/patient-list');
+    },
+    addPatient() {
+      this.$router.push('/add-patient');
+    }
   }
-  
-  .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 90%;
-    max-width: 600px;
-  }
-  
-  .logout-button {
-    padding: 8px 16px;
-    background-color: #d32f2f;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    font-weight: bold;
-    cursor: pointer;
-  }
-  
-  h1 {
-    font-size: 36px;
-    font-weight: bold;
-    margin-bottom: 40px;
-  }
-  
-  .form {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    width: 300px;
-  }
-  
-  input {
-    padding: 12px;
-    font-size: 16px;
-    border: none;
-    background-color: #e6e0e9;
-    border-radius: 6px;
-  }
-  
-  .button-group {
-    display: flex;
-    gap: 20px;
-    margin-top: 30px;
-  }
-  </style>
+};
+</script>
+
+<style scoped>
+.main-content {
+  display: flex;
+  background-color: #fafafa;
+  min-height: 100vh;
+  position: relative;
+}
+
+.logo {
+  position: absolute;
+  top: 1rem;
+  right: 2rem;
+  width: 150px;
+  opacity: 0.95;
+}
+
+.content {
+  margin-left: 64px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+}
+
+.form {
+  margin-bottom: 1.5rem;
+  width: 300px;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+}
+
+.button-group {
+  display: flex;
+  gap: 1rem;
+}
+</style>
+
