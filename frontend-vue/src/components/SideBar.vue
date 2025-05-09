@@ -1,9 +1,10 @@
 <template>
   <div class="sidebar">
     <div class="icon-wrapper">
-      <router-link to="/welcome-hospital" class="icon-link" title="Home">
+      <button class="icon-link" @click="goHome" title="Home">
         <i class="pi pi-home text-2xl"></i>
-      </router-link>
+      </button>
+
 
       <router-link to="/settings" class="icon-link" title="Einstellungen">
         <i class="pi pi-cog text-2xl"></i>
@@ -21,6 +22,19 @@ import { useRouter } from 'vue-router';
 
 const router = useRouter();
 
+
+const goHome = () => {
+  const role = localStorage.getItem('role');
+  if (role == 'Doctor') {
+    router.push('/welcomeDoctorView');
+  }
+  else if (role == 'Paramedic') {
+    router.push('welcomeParamedicView');
+  }
+  else {
+    router.push('/');
+  }
+};
 const logout = () => {
   localStorage.removeItem('session');
   router.push('/');
@@ -41,14 +55,19 @@ const logout = () => {
   align-items: center;
   justify-content: center;
 }
-
+a.icon-link {
+  text-decoration: none;
+  color: #000 !important;
+}
+a.icon-link:hover {
+  color: #000;
+}
 .icon-wrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 1.5rem;
 }
-
 .icon-link {
   display: flex;
   align-items: center;
@@ -61,13 +80,11 @@ const logout = () => {
   background: none;
   border: none;
 }
-
 .icon-link:hover {
   background-color: #eaeaea;
   transform: scale(1.05);
   cursor: pointer;
 }
-
 .router-link-active {
   background-color: #d3d3d3;
   font-weight: bold;

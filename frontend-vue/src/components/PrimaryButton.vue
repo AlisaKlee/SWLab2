@@ -18,7 +18,7 @@
       },
       variant: {
         type: String,
-        default: 'primary' // entweder 'primary' oder 'secondary'
+        default: 'primary' 
       }
     },
     emits: ['click'],

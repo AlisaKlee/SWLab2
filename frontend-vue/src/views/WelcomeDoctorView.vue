@@ -40,13 +40,14 @@ export default {
   },
   methods: {
     handleShowAllPatients() {
-      // Platzhalter
+      this.$router.push('/patient-list');
     },
     addPatient() {
       this.$router.push('/add-patient');
     },
     logout() {
       localStorage.removeItem('session');
+      localStorage.removeItem('role');
       this.$router.push('/');
     }
   }
@@ -60,10 +61,9 @@ export default {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  padding-left: 80px; /* Platz für Sidebar */
+  padding-left: 80px; 
 }
 
-/* Logo oben rechts – größer */
 .logo-container {
   position: absolute;
   top: 1rem;
@@ -75,15 +75,13 @@ export default {
   height: auto;
 }
 
-/* Inhalt auf Höhe der Sidebar-Icons */
 .content {
-  margin-top: 25vh; /* ⬅️ orientiert sich an Sidebar-Mitte */
+  margin-top: 25vh; 
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-/* Titel + Logout nebeneinander */
 .header {
   display: flex;
   justify-content: center;
@@ -98,7 +96,6 @@ h1 {
   margin: 0;
 }
 
-/* Logout-Button */
 .logout-button {
   padding: 8px 16px;
   background-color: #d32f2f;
@@ -109,7 +106,6 @@ h1 {
   cursor: pointer;
 }
 
-/* Eingabefeld */
 .form {
   display: flex;
   flex-direction: column;
@@ -126,7 +122,6 @@ input {
   border-radius: 6px;
 }
 
-/* Button-Gruppe */
 .button-group {
   display: flex;
   gap: 20px;

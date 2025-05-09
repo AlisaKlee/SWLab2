@@ -4,7 +4,7 @@
     <img :src="heartwareLogo" alt="HeartWare Logo" class="logo-top-right" />
 
     <!-- Überschrift -->
-    <h2 class="text-2xl font-bold mb-4">Patient List</h2>
+    <h2 class="text-2xl font-bold mb-4">Patientlist</h2>
 
     <!-- Patiententabelle -->
     <table class="table-auto w-full border">
