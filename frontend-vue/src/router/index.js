@@ -7,7 +7,8 @@ import WelcomeParamedicView from '../views/WelcomeParamedicView.vue';
 import PatientList from '../views/PatientList.vue';
 import History from '../views/History.vue';
 import SettingView from '../views/SettingView.vue'; 
-import PatientDetails from '../components/PatientDetails.vue';
+import DeviceView from '../views/DeviceView.vue';
+import PatientView from '../components/PatientDetails.vue';
 
 const routes = [
   {
@@ -36,7 +37,7 @@ const routes = [
   {
     path: '/patients/:id',
     name: 'PatientDetails',
-    component: PatientDetails,
+    component: PatientView,
     meta: { requiresAuth: true }
   },
   {
@@ -55,6 +56,12 @@ const routes = [
     path: '/settings',
     name: 'Settings',
     component: SettingView, 
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/device',
+    name: 'Device',
+    component: DeviceView,
     meta: { requiresAuth: true }
   }
 ];
