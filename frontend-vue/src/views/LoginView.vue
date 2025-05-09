@@ -34,11 +34,24 @@ export default {
       password: ""
     };
   },
+
   methods: {
     handleLogin() {
-      console.log("Login mit", this.username, this.password);
-      localStorage.setItem("session", "true");
-      this.$router.push("/welcome-hospital");
+      if (this.username == "Doctor" && this.password == "Doctor") {
+        console.log("Login as a doctor was succesful.");
+        localStorage.setItem("session", "true");
+        localStorage.setItem("role", "Doctor");
+        this.$router.push("/welcomeDoctorView");
+      }
+      else if (this.username == "Paramedic" && this.password == "Paramedic") {
+        console.log("Login as a paramedic was succesful.");
+        localStorage.setItem("session", "true");
+        localStorage.setItem("role", "Paramedic");
+        this.$router.push("/welcomeParamedicView");
+      }
+      else {
+        alert("Invalid username or password.");
+      }
     },
     handleCancel() {
       this.username = "";
@@ -54,7 +67,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center; /* zentriert vertikal */
+  justify-content: center;
   height: 100vh;
   padding: 2rem;
   background-color: #f5f8fa;
@@ -65,8 +78,8 @@ export default {
 .logo-top-right {
   position: absolute;
   top: 40px;
-  right: 60px; /* weiter nach innen */
-  width: 180px; /* größer */
+  right: 60px;
+  width: 180px; 
   height: auto;
   z-index: 10;
   opacity: 0.95;
@@ -98,11 +111,18 @@ input {
 input:focus {
   border-color: #007bff;
 }
-
+/**
 .button-group {
   margin-top: 1.5rem;
   display: flex;
   gap: 1rem;
   justify-content: center;
+}*/
+.button-group {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column; /* Buttons untereinander anordnen */
+  gap: 0.75rem; /* Kleinerer Abstand zwischen den Buttons */
+  width: 300px; /* Breite an das Formular anpassen */
 }
 </style>

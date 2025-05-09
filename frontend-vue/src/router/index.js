@@ -1,14 +1,12 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
-// Views
 import LoginView from '../views/LoginView.vue';
 import AddPatient from '../views/AddPatient.vue';
-import WelcomeHospView from '../views/WelcomeHospView.vue';
+import WelcomeDoctorView from '../views/WelcomeDoctorView.vue';
+import WelcomeParamedicView from '../views/WelcomeParamedicView.vue';
 import PatientList from '../views/PatientList.vue';
 import History from '../views/History.vue';
-import SettingView from '../views/SettingView.vue'; // ✅ Singular
-
-// Components
+import SettingView from '../views/SettingView.vue'; 
 import PatientDetails from '../components/PatientDetails.vue';
 
 const routes = [
@@ -18,9 +16,15 @@ const routes = [
     component: LoginView
   },
   {
-    path: '/welcome-hospital',
-    name: 'WelcomeHospital',
-    component: WelcomeHospView,
+    path: '/welcomeDoctorView',
+    name: 'WelcomeDoctor',
+    component: WelcomeDoctorView,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/welcomeParamedicView',
+    name: 'WelcomeParamedic',
+    component: WelcomeParamedicView,
     meta: { requiresAuth: true }
   },
   {
@@ -48,9 +52,9 @@ const routes = [
     meta: { requiresAuth: true }
   },
   {
-    path: '/settings', // ✅ Pfad bleibt plural
+    path: '/settings',
     name: 'Settings',
-    component: SettingView, // ✅ Komponente ist Singular
+    component: SettingView, 
     meta: { requiresAuth: true }
   }
 ];
@@ -62,11 +66,20 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   const isLoggedIn = localStorage.getItem('session') === 'true';
+  const role = localStorage.getItem("role");
 
   if (to.meta.requiresAuth && !isLoggedIn) {
     next('/');
   } else if (to.path === '/' && isLoggedIn) {
-    next('/welcome-hospital');
+    if (role == 'Doctor') {
+      next('/welcomeDoctorView');
+    }
+    else if (role == 'Paramedic') {
+      next('/welcomeParamedicView');
+    }
+    else {
+      next('/');
+    }
   } else {
     next();
   }
