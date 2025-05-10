@@ -20,9 +20,9 @@
         </thead>
         <tbody>
           <tr
-            v-for="patient in patients"
+            v-for="(patient, index) in patients"
             :key="patient.name"
-            @click="goToHistory(patient)"
+            @click="goToHistory(patient, index)"
             class="clickable-row"
           >
             <td>{{ patient.name }}</td>
@@ -74,8 +74,8 @@ const urgencyColor = (level) => {
   }
 };
 
-const goToHistory = (patient) => {
-  router.push('/history');
+const goToHistory = (patient, index) => {
+  router.push(`/patients/${index}`);
 };
 </script>
 

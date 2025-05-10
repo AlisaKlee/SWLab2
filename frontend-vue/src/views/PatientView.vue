@@ -3,7 +3,6 @@
     <h1>Patient Details</h1>
 
     <div class="content">
-      <!-- Linke Seite: Felder und Buttons -->
       <div class="left">
         <div class="form">
           <input :value="patient.eta" disabled placeholder="Ambulance Estimated Arrival" />
@@ -24,7 +23,7 @@
             rows="3"
             class="full-textarea"
           />
-
+      
           <!--Urgency-->
           <select v-model="urgency" class="urgency-select">
             <option disabled value="">Select urgency</option>
@@ -44,7 +43,6 @@
         </div>
       </div>
 
-      <!-- Rechte Seite -->
       <div class="right">
         <div class="form">
 
@@ -82,69 +80,90 @@
 </template>
 
 <script setup>
+import { ref, computed } from 'vue';
 import PrimaryButton from '../components/PrimaryButton.vue';
-import { useRoute } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
+
+const router = useRouter();
 const route = useRoute();
 const patientId = route.params.id;
 
+const patients = [
+  { name: 'Name: Max Mustermann', gender: 'Male', dob:'01/01/2005', eta: 'Ambulance 1, ETA: 12 min', preCondition: 'Pre condition: None', preMedication: 'Pre medication: None' },
+  { name: 'Name: Laura Köhler', gender: 'Female', dob:'16/01/2005',  eta: 'Ambulance 3, ETA: 8 min', preCondition: 'Pre condition: Head injury', preMedication: 'Pre medication: None' },
+  { name: 'Name: Sarah Mayer', gender: 'Female', dob:'23/05/2001',  eta: 'Ambulance 2, ETA: 15 min', preCondition: 'Pre condition: Arm fracture', preMedication: 'Pre medication: Ibuprofen' },
+  { name: 'Name: Tom Maier', gender: 'Male', dob:'19/09/1992',  eta: 'Ambulance 1, ETA: 20 min', preCondition: 'Pre condition: Flu', preMedication: 'Pre medication: Paracetamol' },
+  { name: 'Name: Lisa Kurz', gender: 'Female', dob:'30/07/1990',  eta: 'Ambulance 5, ETA: 5 min', preCondition: 'Pre condition: Discomfort', preMedication: 'Pre medication: None' },
+  { name: 'Name: Hildegard Slotta',gender: 'Female', dob:'17/12/1965',  eta: 'Ambulance 6, ETA: 0 min', preCondition: 'Pre condition: Deceased', preMedication: 'Pre medication: None' }
+];
 
-const patient = {
-  name: 'Name: Max Mustermann',
-  eta: 'Ambulance 1 Estimated arrival: 12 min',
-  preCondition: 'Pre Condition: None',
-  preMedication: 'Pre Medication: None'
-};
+/** 
+ * wenn mit echten daten dann: 
+<input :value="`Pre-existing Medication: ${patient.preMedication}`" disabled />
+<input :value="`Pre-existing Condition: ${patient.preCondition}`" disabled />
+<input :value="`Full Name: ${patient.name}`" disabled />
+<input :value="`Ambulance ETA: ${patient.eta}`" disabled />
+*/
 
+const patient = computed(() => patients[patientId]); 
 
-//let medication = 'Medication: ';
-//let description = 'Description: ';
-let urgency = ': Immediate';
 let timestamp = '15:00:00, 15.04.2025';
+const medication = ref('');
+const description = ref('');
+const urgency = ref('');
 
 function handleUpdate() {
-  alert('Updated');
+  alert('Patient data was updated.');
 }
 
 function handleReset() {
-  medication = '';
-  description = '';
-  urgency = '';
+  medication.value = '';
+  description.value = '';
+  urgency.value = '';
 }
 
 function handleEdit() {
-  alert('Edit mode not implemented');
+  router.push({
+    path: '/edit-patient',
+    query: {
+      id:patientId,
+      firstname: patient.value.name.split(' ')[1],
+      lastname: patient.value.name.split(' ')[2],
+      dob: patient.value.dob,
+      gender: patient.value.gender,
+      medication: medication.value,
+      conditions: patient.value.preCondition.replace(/^Pre condition:\s*/, '') || ''
+    }
+  });
 }
 
 function handleShowHistory() {
-  alert('Showing history...');
+  router.push('/history');
+  /**
+   * Für später: daten in history pushen (optional)
+   * router.push({ path: `/history`, query: { id: patientId } });
+   */
 }
-
-let medication = '';
 
 function onMedicationInput(event) {
   const raw = event.target.value;
   const prefix = 'Medication: ';
-  // Entferne alles vor dem Prefix, falls jemand zurücklöscht
   if (raw.startsWith(prefix)) {
-    medication = raw.slice(prefix.length);
+    medication.value = raw.slice(prefix.length);
   } else {
-    // Setze zurück, wenn das Prefix gelöscht wurde
-    event.target.value = prefix + medication;
+    event.target.value = prefix + medication.value;
   }
 }
 
-let description = '';
 function onDescriptionInput(event) {
   const raw = event.target.value;
   const prefix = 'Description: ';
   if (raw.startsWith(prefix)) {
-    description = raw.slice(prefix.length);
+    description.value = raw.slice(prefix.length);
   } else {
-    event.target.value = prefix + description;
+    event.target.value = prefix + description.value;
   }
 }
-
-
 </script>
 
 <style scoped>
@@ -169,7 +188,6 @@ h1 {
   max-width: 1100px;
 }
 
-/* Linke und rechte Spalte */
 .left,
 .right {
   display: flex;
@@ -217,7 +235,7 @@ textarea {
 .full-input {
   padding: 12px;
   font-size: 16px;
-  font-family: inherit;
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   font-weight: 400;
   border: none;
   background-color: #e6e0e9;
@@ -228,7 +246,7 @@ textarea {
 .full-textarea {
   padding: 12px;
   font-size: 16px;
-  font-family: inherit;
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   font-weight: 400;
   border: none;
   background-color: #e6e0e9;

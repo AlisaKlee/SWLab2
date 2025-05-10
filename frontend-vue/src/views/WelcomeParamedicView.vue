@@ -4,15 +4,14 @@
     <img src="../assets/HeartWareLogo.png" alt="HeartWare Logo" class="logo" />
 
     <div class="content">
-      <h1 class="title">Willkommen Team 1!</h1>
+      <h1 class="title">Welcome Team 1!</h1>
 
       <div class="form">
-        <input v-model="search" placeholder="Patient suchen" @keyup.enter="handleSearch" />
+        <input v-model="search" placeholder="Search for patient" @keyup.enter="handleSearch" />
       </div>
 
       <div class="button-group">
-        <PrimaryButton label="Alle Patienten anzeigen" @click="showAllPatients" variant="primary" />
-        <PrimaryButton label="Patient hinzufügen" @click="addPatient" variant="secondary" />
+        <PrimaryButton label="Add patient" @click="addPatient" variant="secondary" />
       </div>
     </div>
   </div>
