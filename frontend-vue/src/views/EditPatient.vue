@@ -1,5 +1,4 @@
 <template>
-      <!-- Main Content -->
       <div class="main-content">
         <h1>Edit patient data</h1>
   
@@ -18,7 +17,7 @@
   
           <label>Date of birth:</label>
           <div class="input-wrapper">
-            <input v-model="form.dob" type="text" />
+            <input v-model="form.dob" type="text" placeholder="dd/mm/yyy" title="Please use the format dd/mm/yyyy"/>
             <span class="clear-icon" @click="form.dob = ''">✖</span>
           </div>
   
@@ -43,27 +42,49 @@
         </div>
   
         <div class="button-group">
-          <button class="save-button">Save changes</button>
-          <button class="cancel-button">Cancel</button>
+          <button class="save-button"@click="handleSave">Save changes </button>
+          <button class="cancel-button" @click="handleCancel">Cancel</button>
         </div>
       </div>
-  
-      <!-- Logo rechts -->
-      <img src="@/assets/HeartWareLogo.png" class="logo" />
-    <!--</div>-->
-  </template>
-  
+    </template>    
+
   <script setup>
-  import { reactive } from 'vue';
+  import { reactive, toRaw } from 'vue';
+  import { useRoute } from 'vue-router';
+  import router from '../router';
+  //import { patients } from '../data/patients'; 
+
+
+  const route = useRoute();
   
-  const form = reactive({
-    firstname: 'Maximilian',
-    lastname: 'Mustermann',
-    dob: '01/01/2005',
-    gender: 'Male',
-    conditions: 'None',
-    medication: 'None'
-  });
+  const initialData = {
+    firstname: route.query.firstname || '',
+    lastname: route.query.lastname || '',
+    dob: route.query.dob,
+    gender: route.query.gender,
+    conditions: route.query.conditions || '',
+    medication: route.query.medication || ''
+  };
+
+  const form = reactive({...initialData});
+     
+  function handleSave() {
+    if (patients[patientIndex]){
+      patients[patientIndex].name = `Name: ${form.firstname} ${form.lastname}`;
+      patients[patientIndex].dob = form.dob;
+      patients[patientIndex].gender = form.gender;
+      patients[patientIndex].conditions = `Pre existing conditions: ${form.conditions}`;
+      patients[patientIndex].medication = `Medication: ${form.medication}`;
+      alert('Patient data was saved.');
+    }
+    else {
+      alert('Patient not found.');
+    }
+  }
+
+  function handleCancel() {
+      Object.assign(form, toRaw(initialData));
+  }
   </script>
   
   <style scoped>
@@ -113,6 +134,7 @@
     font-size: 14px;
     margin-bottom: 4px;
     margin-top: 16px;
+    font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   }
   
   .input-wrapper {

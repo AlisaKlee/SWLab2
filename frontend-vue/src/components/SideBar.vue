@@ -7,7 +7,7 @@
       <button class="icon-link" @click="goHome" title="Home">
         <i class="pi pi-home text-2xl"></i>
       </button>
-      <router-link to="/settings" class="icon-link" title="Settings">
+      <router-link to="/settings" class="goSettings" title="Settings">
         <i class="pi pi-cog text-2xl"></i>
       </router-link>
       <button class="icon-link" @click="logout" title="Logout">

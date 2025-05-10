@@ -4,15 +4,15 @@
     <img src="../assets/HeartWareLogo.png" alt="HeartWare Logo" class="logo" />
 
     <div class="content">
-      <h1 class="title">Willkommen Dr. Schmidt!</h1>
+      <h1 class="title">Welcome Dr. Schmidt!</h1>
 
       <div class="form">
-        <input v-model="search" placeholder="Patient suchen" @keyup.enter="handleSearch" />
+        <input v-model="search" placeholder="Search for patient" @keyup.enter="handleSearch" />
       </div>
 
       <div class="button-group">
-        <PrimaryButton label="Alle Patienten anzeigen" @click="showAllPatients" variant="primary" />
-        <PrimaryButton label="Patient hinzufügen" @click="addPatient" variant="secondary" />
+        <PrimaryButton label="Show all patients" @click="showAllPatients" variant="primary" />
+        <PrimaryButton label="Add patient" @click="addPatient" variant="secondary" />
       </div>
     </div>
   </div>
@@ -45,7 +45,7 @@ export default {
       if (match) {
         this.$router.push(`/patients/${match.id}`);
       } else {
-        alert('Patient nicht gefunden.');
+        alert('Could not find patient.');
       }
     },
     showAllPatients() {

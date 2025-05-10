@@ -9,7 +9,9 @@ import PatientList from '../views/PatientList.vue';
 import History from '../views/History.vue';
 import SettingView from '../views/SettingView.vue';
 import DeviceView from '../views/DeviceView.vue';
-import PatientView from '../components/PatientDetails.vue';
+import PatientView from '../views/PatientView.vue';
+import EditPatient from '../views/EditPatient.vue';
+import PatientDetails from '../components/PatientDetails.vue';
 
 const routes = [
   { path: '/', name: 'Login', component: LoginView },
@@ -35,6 +37,18 @@ const routes = [
     path: '/patients/:id',
     name: 'PatientDetails',
     component: PatientView,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/patient-view',
+    name: 'PatientView',
+    component: PatientView,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/edit-patient',
+    name: 'EditPatient',
+    component: EditPatient,
     meta: { requiresAuth: true }
   },
   {

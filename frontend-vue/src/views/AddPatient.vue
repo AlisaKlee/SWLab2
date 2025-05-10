@@ -11,16 +11,15 @@
 
         <input v-model="preExistingCondition" placeholder="Pre existing condition" />
         <input v-model="medication" placeholder="Medication" />
-      </div>
-  
+
       <!--Drow down menu Gender-->
       <select v-model = "gender" >
-        <option disabled value = "" >Please select gender> </option>
+        <option disabled value="">Please select gender: </option>
         <option> Male </option>
         <option> Female </option>  
         <option> Other </option>
       </select>
-    
+      </div>
       <!--Buttons-->
       <div class="button-group">
         <PrimaryButton label="Add" @click="handleAdd" variant="primary" />
@@ -97,7 +96,6 @@
   margin-top: 50px;
 }
 
-/* Logo oben rechts */
 .logo-container {
   position: absolute;
   top: 1rem;
@@ -115,7 +113,6 @@ h1 {
   margin-bottom: 40px;
 }
 
-/* Formular inkl. Dropdown */
 .form {
   display: flex;
   flex-direction: column;
@@ -157,7 +154,6 @@ select {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
 }
 
-/* Button-Gruppe */
 .button-group {
   display: flex;
   gap: 20px;
