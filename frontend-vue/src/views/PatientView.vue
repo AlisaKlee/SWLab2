@@ -1,4 +1,8 @@
 <template>
+  <div class="edit-wrapper">
+    <img src="../assets/HeartWareLogo.png" alt="HeartWare Logo" class="logo-top-right" />
+  </div>
+
   <div class="page-container">
     <h1>Patient Details</h1>
 
@@ -167,19 +171,26 @@ function onDescriptionInput(event) {
 </script>
 
 <style scoped>
+.logo-top-right {
+  position: absolute;
+  top: 60px;
+  right: 20px;
+  width: 120px;
+  height: auto;
+  z-index: 10;
+  opacity: 0.95;
+}
 .page-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-top: 40px;
 }
-
 h1 {
   font-size: 36px;
   font-weight: bold;
   margin-bottom: 40px;
 }
-
 .content {
   display: flex;
   gap: 80px;
@@ -187,7 +198,6 @@ h1 {
   width: 100%;
   max-width: 1100px;
 }
-
 .left,
 .right {
   display: flex;
@@ -195,13 +205,11 @@ h1 {
   gap: 30px;
   width: 320px;
 }
-
 .form {
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
-
 input,
 textarea,
 select {
@@ -212,11 +220,9 @@ select {
   border-radius: 6px;
   resize: none;
 }
-
 textarea {
   min-height: 80px;
 }
-
 .button-group {
   display: flex;
   gap: 20px;
@@ -267,16 +273,13 @@ textarea {
   font-weight: 400;
   color: #000;
 }
-
 .temperature-label {
   font-weight: plain;
   margin-bottom: 8px;
 }
-
 .temperature-value {
   font-size: 20px;
 }
-
 .saturation-box {
   background-color: rgba(100, 180, 255, 0.2);
   border-radius: 12px;
@@ -287,12 +290,10 @@ textarea {
   font-weight: 400;
   color: #000;
 }
-
 .saturation-label {
   font-weight: plain;
   margin-bottom: 8px;
 }
-
 .saturation-value {
   font-size: 20px;
 }
@@ -306,18 +307,15 @@ textarea {
   font-weight: 400;
   color: #000;
 }
-
 .timestamp-label {
   font-weight: 400;
   font-size: 14px;
   margin-bottom: 8px;
 }
-
 .timestamp-value {
   font-weight: 400;
   font-size: 18px;
 }
-
 .urgency-select {
   padding: 12px;
   font-size: 16px;
@@ -327,5 +325,4 @@ textarea {
   border-radius: 6px;
   width: 100%;
 }
-
 </style>

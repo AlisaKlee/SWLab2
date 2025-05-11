@@ -1,4 +1,7 @@
 <template>
+  <div class="edit-wrapper">
+    <img src="../assets/HeartWareLogo.png" alt="HeartWare Logo" class="logo-top-right" />
+  </div>
     <div class="container">
       <!--Title-->
       <h1>Add Patient</h1>
@@ -88,23 +91,22 @@
 </script>
 
 <style scoped>
+.logo-top-right {
+  position: absolute;
+  top: 60px;
+  right: 80px;
+  width: 120px;
+  height: auto;
+  z-index: 10;
+  opacity: 0.95;
+}
+
 .container {
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-top: 50px;
-}
-
-.logo-container {
-  position: absolute;
-  top: 1rem;
-  right: 2rem;
-}
-
-.logo-image {
-  width: 150px;
-  height: auto;
 }
 
 h1 {

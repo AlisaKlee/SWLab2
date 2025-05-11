@@ -1,4 +1,7 @@
 <template>
+   <div class="edit-wrapper">
+    <img src="../assets/HeartWareLogo.png" alt="HeartWare Logo" class="logo-top-right" />
+  </div>
     <div class="device-container">
       <!-- Titel -->
       <h1 class="title">Device</h1>
@@ -54,6 +57,15 @@
   </script>
   
   <style scoped>
+  .logo-top-right {
+  position: absolute;
+  top: 100px;
+  right: 20px;
+  width: 120px;
+  height: auto;
+  z-index: 10;
+  opacity: 0.95;
+}
   .device-container {
     display: flex;
     flex-direction: column;

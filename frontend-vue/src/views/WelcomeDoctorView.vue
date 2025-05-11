@@ -7,7 +7,12 @@
       <h1 class="title">Welcome Dr. Schmidt!</h1>
 
       <div class="form">
-        <input v-model="search" placeholder="Search for patient" @keyup.enter="handleSearch" />
+        <input v-model="search" placeholder="Search for patient" />
+        <ul v-if="search && filteredPatients.length" class="results-list">
+          <li v-for="patient in filteredPatients" :key="patient.id" @click="selectPatient(patient)" class="result-item">
+            {{ patient.name }}
+          </li>
+        </ul>
       </div>
 
       <div class="button-group">
@@ -30,14 +35,36 @@ export default {
   },
   data() {
     return {
-      search: ''
+      search:'',
+      patients: [
+        { id: 0, name: 'Max Mustermann' },
+        { id: 1, name: 'Laura Köhler' },
+        { id: 2, name: 'Sarah Mayer'},
+        { id: 3, name: 'Tom Maier'},
+        { id: 4, name: 'Lisa Kurz'},
+        { id: 5, name: 'Hildegard Slotta'}
+      ]
     };
   },
+  computed: {
+    filteredPatients() {
+      return this.patients.filter(patient =>
+        patient.name.toLowerCase().includes(this.search.toLowerCase())
+      );
+    }
+  },
   methods: {
+    selectPatient(patient){
+      this.$router.push(`/patients/${patient.id}`);
+    },
     handleSearch() {
       const mockPatients = [
-        { id: 1, name: 'Max Mustermann' },
-        { id: 2, name: 'Sarah Mayer' }
+        { id: 0, name: 'Max Mustermann' },
+        { id: 1, name: 'Laura Köhler' },
+        { id: 2, name: 'Sarah Mayer'},
+        { id: 3, name: 'Tom Maier'},
+        { id: 4, name: 'Lisa Kurz'},
+        { id: 5, name: 'Hildegard Slotta'}
       ];
       const match = mockPatients.find(p =>
         p.name.toLowerCase().includes(this.search.toLowerCase())
@@ -106,5 +133,27 @@ input {
 .button-group {
   display: flex;
   gap: 1rem;
+}
+
+.results-list {
+  list-style: none;
+  margin-top: 10px;
+  padding: 0;
+  width: 300px;
+  border: 1px solid #ccc;
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  background: white;
+  border-radius: 6px;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.result-item {
+  padding: 10px 12px;
+  cursor: pointer;
+}
+
+.result-item:hover {
+  background-color: #f0f0f0;
 }
 </style>
