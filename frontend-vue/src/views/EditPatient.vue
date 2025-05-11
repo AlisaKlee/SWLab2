@@ -1,4 +1,7 @@
 <template>
+  <div class="edit-wrapper">
+    <img src="../assets/HeartWareLogo.png" alt="HeartWare Logo" class="logo-top-right" />
+  </div>
       <div class="main-content">
         <h1>Edit patient data</h1>
   
@@ -88,6 +91,18 @@
   </script>
   
   <style scoped>
+.logo-top-right {
+  position: absolute;
+  top: 20px;
+  right: 100px;
+  width: 120px;
+  height: auto;
+  z-index: 10;
+  opacity: 0.95;
+}
+.main-content {
+  position: relative;
+}
   .edit-container {
     display: flex;
     align-items: center;
