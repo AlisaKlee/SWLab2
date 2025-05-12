@@ -1,8 +1,5 @@
 <template>
   <div class="list-container">
-    <!-- Logo oben rechts -->
-    <img :src="heartwareLogo" alt="HeartWare Logo" class="logo-top-right" />
-
     <!-- Titel -->
     <h2 class="title">Patient List</h2>
 
@@ -42,7 +39,6 @@
 
 <script setup>
 import { useRouter } from 'vue-router';
-import heartwareLogo from '../assets/HeartWareLogo.png';
 
 const router = useRouter();
 
@@ -86,15 +82,6 @@ const goToHistory = (patient, index) => {
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-.logo-top-right {
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  width: 100px;
-  height: auto;
-  z-index: 10;
 }
 
 .title {

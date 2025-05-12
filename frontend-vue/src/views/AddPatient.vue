@@ -1,106 +1,97 @@
 <template>
-  <div class="edit-wrapper">
-    <img src="../assets/HeartWareLogo.png" alt="HeartWare Logo" class="logo-top-right" />
-  </div>
-    <div class="container">
-      <!--Title-->
-      <h1>Add Patient</h1>
-  
-      <!--Eingabefeld-->
-      <div class="form">
-        <input v-model="firstname" placeholder="Firstname" />
-        <input v-model="lastname" placeholder="Lastname" />
-        <input v-model="dateOfBirth" placeholder="Date of birth" />
+  <div class="container">
+    <!-- Title -->
+    <h1>Add Patient</h1>
 
-        <input v-model="preExistingCondition" placeholder="Pre existing condition" />
-        <input v-model="medication" placeholder="Medication" />
+    <!-- Input fields -->
+    <div class="form">
+      <input v-model="firstname" placeholder="First name" />
+      <input v-model="lastname" placeholder="Last name" />
+      <input v-model="dateOfBirth" type="date" :max="maxDate" placeholder="Date of birth" />
+      <input v-model="preExistingCondition" placeholder="Pre-existing condition" />
+      <input v-model="medication" placeholder="Medication" />
 
-      <!--Drow down menu Gender-->
-      <select v-model = "gender" >
-        <option disabled value="">Please select gender: </option>
-        <option> Male </option>
-        <option> Female </option>  
-        <option> Other </option>
+      <!-- Dropdown Gender -->
+      <select v-model="gender">
+        <option disabled value="">Please select gender</option>
+        <option>Male</option>
+        <option>Female</option>
+        <option>Other</option>
       </select>
-      </div>
-      <!--Buttons-->
-      <div class="button-group">
-        <PrimaryButton label="Add" @click="handleAdd" variant="primary" />
-        <PrimaryButton label="Cancel" @click="handleCancel" variant="secondary" />
-      </div>
     </div>
+
+    <!-- Buttons -->
+    <div class="button-group">
+      <PrimaryButton label="Add" @click="handleAdd" variant="primary" />
+      <PrimaryButton label="Cancel" @click="handleCancel" variant="secondary" />
+    </div>
+  </div>
 </template>
 
 <script>
-  import PrimaryButton from '../components/PrimaryButton.vue';
-  import axios from 'axios';
+import PrimaryButton from '../components/PrimaryButton.vue';
+import axios from 'axios';
 
-  export default {
-    components : {
-        PrimaryButton
-    },
-    data() {
-        return {
-            firstname: '',
-            lastname: '',
-            dateOfBirth: '',
-            gender: '',                             //ToDo: prüfen ob gender richtig 
-            preExistingCondition: '',
-            medication: ''
-        };
-    },
-    methods: {
-        async handleAdd() {
-            const newPatient = {
-            firstname: this.firstname,
-            lastname: this.lastname,
-            dateOfBirth: this.dateOfBirth,
-            gender: this.gender,
-            preExistingCondition: this.preExistingCondition,
-            medication: this.medication
-            };
+export default {
+  components: {
+    PrimaryButton
+  },
+  data() {
+    return {
+      firstname: '',
+      lastname: '',
+      dateOfBirth: '',
+      gender: '',
+      preExistingCondition: '',
+      medication: ''
+    };
+  },
+  computed: {
+    maxDate() {
+      return new Date().toISOString().split('T')[0];
+    }
+  },
+  methods: {
+    async handleAdd() {
+      const newPatient = {
+        firstname: this.firstname,
+        lastname: this.lastname,
+        dateOfBirth: this.dateOfBirth,
+        gender: this.gender,
+        preExistingCondition: this.preExistingCondition,
+        medication: this.medication
+      };
 
-            try {
-            const response = await axios.post('http://localhost:8080/api/patients', newPatient);
-            console.log('Added to Server:', response.data), this.firstname, this.lastname;
-            alert('Patient was added sucessfully!');
+      try {
+        const response = await axios.post('http://localhost:8080/api/patients', newPatient);
+        console.log('Added to Server:', response.data);
+        alert('Patient was added successfully!');
 
-            this.firstname = '';
-            this.lastname = '';
-            this.gender = '';
-            this.dateOfBirth = '';
-            this.preExistingCondition = '';
-            this.medication = '';
-            } catch (error) {
-            console.error('Error while trying to add patient', error);
-            alert('Error trying to add patient!');
-            }
-        },
-        handleCancel() {
-            console.log('Cancelled');
-            alert('Cancelled.');
-            this.firstname = '';
-            this.lastname = '';
-            this.dateOfBirth = '';
-            this.gender = '';                        //ToDo: prüfen ob gender richtig 
-            this.preExistingCondition = '';
-            this.medication = '';
-        }
+        this.firstname = '';
+        this.lastname = '';
+        this.dateOfBirth = '';
+        this.gender = '';
+        this.preExistingCondition = '';
+        this.medication = '';
+      } catch (error) {
+        console.error('Error while trying to add patient', error);
+        alert('Error trying to add patient!');
       }
-  };
+    },
+    handleCancel() {
+      this.firstname = '';
+      this.lastname = '';
+      this.dateOfBirth = '';
+      this.gender = '';
+      this.preExistingCondition = '';
+      this.medication = '';
+      alert('Cancelled.');
+    }
+  }
+};
 </script>
 
 <style scoped>
-.logo-top-right {
-  position: absolute;
-  top: 60px;
-  right: 80px;
-  width: 120px;
-  height: auto;
-  z-index: 10;
-  opacity: 0.95;
-}
-
 .container {
   position: relative;
   display: flex;
@@ -133,27 +124,8 @@ select {
   box-sizing: border-box;
 }
 
-.input-field {
-  padding: 12px;
-  font-size: 16px;
-  width: 100%;
-  border: 1px solid #ccc;
-  background-color: #e6e0e9;
-  border-radius: 8px;
+input[type="date"] {
   font-family: inherit;
-  box-sizing: border-box;
-}
-
-.section-title {
-  font-size: 1.5rem;
-  font-weight: bold;
-  margin-bottom: 1rem;
-}
-
-.dropdown-section {
-  width: 300px;
-  margin-top: 20px;
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
 }
 
 .button-group {
