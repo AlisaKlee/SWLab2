@@ -1,6 +1,5 @@
 <template>
   <div class="container">
-    <img src="../assets/HeartWareLogo.png" alt="HeartWare Logo" class="logo-top-right" />
     <h1>HeartWare</h1>
 
     <div class="form">
@@ -67,16 +66,6 @@ export default {
   background-color: #f5f8fa;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   overflow: hidden;
-}
-
-.logo-top-right {
-  position: absolute;
-  top: 40px;
-  right: 60px;
-  width: 180px;
-  height: auto;
-  z-index: 10;
-  opacity: 0.95;
 }
 
 h1 {

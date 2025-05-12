@@ -1,8 +1,4 @@
 <template>
-  <div class="edit-wrapper">
-    <img src="../assets/HeartWareLogo.png" alt="HeartWare Logo" class="logo-top-right" />
-  </div>
-
   <div class="page-container">
     <h1>Patient Details</h1>
 
@@ -49,14 +45,11 @@
 
       <div class="right">
         <div class="form">
-
-          <!-- Timestamp -->
           <div class="timestamp-box">
             <div class="timestamp-label">Timestamp</div>
             <div class="timestamp-value">{{ timestamp }}</div>
           </div>
 
-          <!-- Temperature -->
           <div class="temperature-box">
             <div class="temperature-label">Temperature</div>
             <div class="temperature-value">
@@ -64,14 +57,11 @@
             </div>
           </div>
 
-          <!-- O₂ Saturation -->
           <div class="saturation-box">
             <div class="saturation-label">O₂ Saturation</div>
             <div class="saturation-value">{{ saturation }} 98%</div>
           </div>
 
-
-          <!-- EKG -->
           <textarea disabled class="full-textarea">EKG: [EKG Curve Placeholder]</textarea>
         </div>
 
@@ -94,27 +84,22 @@ const patientId = route.params.id;
 
 const patients = [
   { name: 'Name: Max Mustermann', gender: 'Male', dob:'01/01/2005', eta: 'Ambulance 1, ETA: 12 min', preCondition: 'Pre condition: None', preMedication: 'Pre medication: None' },
-  { name: 'Name: Laura Köhler', gender: 'Female', dob:'16/01/2005',  eta: 'Ambulance 3, ETA: 8 min', preCondition: 'Pre condition: Head injury', preMedication: 'Pre medication: None' },
-  { name: 'Name: Sarah Mayer', gender: 'Female', dob:'23/05/2001',  eta: 'Ambulance 2, ETA: 15 min', preCondition: 'Pre condition: Arm fracture', preMedication: 'Pre medication: Ibuprofen' },
-  { name: 'Name: Tom Maier', gender: 'Male', dob:'19/09/1992',  eta: 'Ambulance 1, ETA: 20 min', preCondition: 'Pre condition: Flu', preMedication: 'Pre medication: Paracetamol' },
-  { name: 'Name: Lisa Kurz', gender: 'Female', dob:'30/07/1990',  eta: 'Ambulance 5, ETA: 5 min', preCondition: 'Pre condition: Discomfort', preMedication: 'Pre medication: None' },
-  { name: 'Name: Hildegard Slotta',gender: 'Female', dob:'17/12/1965',  eta: 'Ambulance 6, ETA: 0 min', preCondition: 'Pre condition: Deceased', preMedication: 'Pre medication: None' }
+  { name: 'Name: Laura Köhler', gender: 'Female', dob:'16/01/2005', eta: 'Ambulance 3, ETA: 8 min', preCondition: 'Pre condition: Head injury', preMedication: 'Pre medication: None' },
+  { name: 'Name: Sarah Mayer', gender: 'Female', dob:'23/05/2001', eta: 'Ambulance 2, ETA: 15 min', preCondition: 'Pre condition: Arm fracture', preMedication: 'Pre medication: Ibuprofen' },
+  { name: 'Name: Tom Maier', gender: 'Male', dob:'19/09/1992', eta: 'Ambulance 1, ETA: 20 min', preCondition: 'Pre condition: Flu', preMedication: 'Pre medication: Paracetamol' },
+  { name: 'Name: Lisa Kurz', gender: 'Female', dob:'30/07/1990', eta: 'Ambulance 5, ETA: 5 min', preCondition: 'Pre condition: Discomfort', preMedication: 'Pre medication: None' },
+  { name: 'Name: Hildegard Slotta',gender: 'Female', dob:'17/12/1965', eta: 'Ambulance 6, ETA: 0 min', preCondition: 'Pre condition: Deceased', preMedication: 'Pre medication: None' }
 ];
 
-/** 
- * wenn mit echten daten dann: 
-<input :value="`Pre-existing Medication: ${patient.preMedication}`" disabled />
-<input :value="`Pre-existing Condition: ${patient.preCondition}`" disabled />
-<input :value="`Full Name: ${patient.name}`" disabled />
-<input :value="`Ambulance ETA: ${patient.eta}`" disabled />
-*/
-
-const patient = computed(() => patients[patientId]); 
+const patient = computed(() => patients[patientId]);
 
 let timestamp = '15:00:00, 15.04.2025';
 const medication = ref('');
 const description = ref('');
 const urgency = ref('');
+const temperature = ref(36); // optional
+const saturation = ref(98); // optional
+const isTempCritical = computed(() => temperature.value >= 38);
 
 function handleUpdate() {
   alert('Patient data was updated.');
@@ -130,7 +115,7 @@ function handleEdit() {
   router.push({
     path: '/edit-patient',
     query: {
-      id:patientId,
+      id: patientId,
       firstname: patient.value.name.split(' ')[1],
       lastname: patient.value.name.split(' ')[2],
       dob: patient.value.dob,
@@ -143,10 +128,6 @@ function handleEdit() {
 
 function handleShowHistory() {
   router.push('/history');
-  /**
-   * Für später: daten in history pushen (optional)
-   * router.push({ path: `/history`, query: { id: patientId } });
-   */
 }
 
 function onMedicationInput(event) {
@@ -171,15 +152,6 @@ function onDescriptionInput(event) {
 </script>
 
 <style scoped>
-.logo-top-right {
-  position: absolute;
-  top: 60px;
-  right: 20px;
-  width: 120px;
-  height: auto;
-  z-index: 10;
-  opacity: 0.95;
-}
 .page-container {
   display: flex;
   flex-direction: column;
@@ -274,7 +246,6 @@ textarea {
   color: #000;
 }
 .temperature-label {
-  font-weight: plain;
   margin-bottom: 8px;
 }
 .temperature-value {
@@ -291,14 +262,13 @@ textarea {
   color: #000;
 }
 .saturation-label {
-  font-weight: plain;
   margin-bottom: 8px;
 }
 .saturation-value {
   font-size: 20px;
 }
 .timestamp-box {
-  background-color: rgba(144, 238, 144, 0.2); 
+  background-color: rgba(144, 238, 144, 0.2);
   border-radius: 12px;
   padding: 20px;
   text-align: center;
@@ -308,12 +278,10 @@ textarea {
   color: #000;
 }
 .timestamp-label {
-  font-weight: 400;
   font-size: 14px;
   margin-bottom: 8px;
 }
 .timestamp-value {
-  font-weight: 400;
   font-size: 18px;
 }
 .urgency-select {

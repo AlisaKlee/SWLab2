@@ -1,7 +1,6 @@
 <template>
   <div class="main-content">
     <Sidebar />
-    <img src="../assets/HeartWareLogo.png" alt="HeartWare Logo" class="logo" />
 
     <div class="content">
       <h1 class="title">Welcome Team 1!</h1>
@@ -9,7 +8,12 @@
       <div class="form">
         <input v-model="search" placeholder="Search for patient" />
         <ul v-if="search && filteredPatients.length" class="results-list">
-          <li v-for="patient in filteredPatients" :key="patient.id" @click="selectPatient(patient)" class="result-item">
+          <li
+            v-for="patient in filteredPatients"
+            :key="patient.id"
+            @click="selectPatient(patient)"
+            class="result-item"
+          >
             {{ patient.name }}
           </li>
         </ul>
@@ -34,14 +38,14 @@ export default {
   },
   data() {
     return {
-      search:'',
+      search: '',
       patients: [
         { id: 0, name: 'Max Mustermann' },
         { id: 1, name: 'Laura Köhler' },
-        { id: 2, name: 'Sarah Mayer'},
-        { id: 3, name: 'Tom Maier'},
-        { id: 4, name: 'Lisa Kurz'},
-        { id: 5, name: 'Hildegard Slotta'}
+        { id: 2, name: 'Sarah Mayer' },
+        { id: 3, name: 'Tom Maier' },
+        { id: 4, name: 'Lisa Kurz' },
+        { id: 5, name: 'Hildegard Slotta' }
       ]
     };
   },
@@ -53,26 +57,8 @@ export default {
     }
   },
   methods: {
-    selectPatient(patient){
+    selectPatient(patient) {
       this.$router.push(`/patients/${patient.id}`);
-    },
-    handleSearch() {
-      const mockPatients = [
-        { id: 0, name: 'Max Mustermann' },
-        { id: 1, name: 'Laura Köhler' },
-        { id: 2, name: 'Sarah Mayer'},
-        { id: 3, name: 'Tom Maier'},
-        { id: 4, name: 'Lisa Kurz'},
-        { id: 5, name: 'Hildegard Slotta'}
-      ];
-      const match = mockPatients.find(p =>
-        p.name.toLowerCase().includes(this.search.toLowerCase())
-      );
-      if (match) {
-        this.$router.push(`/patients/${match.id}`);
-      } else {
-        alert('Could not find patient.');
-      }
     },
     addPatient() {
       this.$router.push('/add-patient');
@@ -87,14 +73,6 @@ export default {
   background-color: #fafafa;
   min-height: 100vh;
   position: relative;
-}
-
-.logo {
-  position: absolute;
-  top: 1rem;
-  right: 2rem;
-  width: 150px;
-  opacity: 0.95;
 }
 
 .content {
@@ -153,4 +131,3 @@ input {
   background-color: #f0f0f0;
 }
 </style>
-

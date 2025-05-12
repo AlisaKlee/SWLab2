@@ -1,10 +1,6 @@
 <template>
   <div class="settings-view">
  
-    <div class="logo-container">
-      <img :src="logo" alt="HeartWare Logo" class="logo-image" />
-    </div>
-
     <h2 class="main-title">Settings</h2>
 
     <section>
@@ -44,8 +40,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
-import logo from '../assets/HeartWareLogo.png'; 
+import { useRouter } from 'vue-router'; 
 
 const oldPassword = ref('');
 const newPassword = ref('');
@@ -79,18 +74,6 @@ onMounted(() => {
   margin: auto;
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   position: relative;
-}
-
-.logo-container {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-}
-
-.logo-image {
-  width: 120px;
-  height: auto;
-  opacity: 0.95;
 }
 
 /* Titel */
