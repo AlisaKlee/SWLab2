@@ -30,12 +30,14 @@ export default {
   genderFemale: 'Female',
   genderOther: 'Other',
   preExistingCondition: 'Pre-existing condition',
+  preExistingMedication: 'Pre-existing medication',
   medication: 'Medication',
   saveChanges: 'Save changes',
   editPatientData: 'Edit patient data',
   update: 'Update',
   reset: 'Reset',
   selectUrgency: 'Select urgency',
+  description: 'Description',
 
   // Patient Details
   patientDetails: 'Patient Details',
@@ -60,7 +62,6 @@ export default {
   patientList: 'Patient List',
   patientName: 'Patient Name',
   treating: 'Treating',
-  description: 'Description',
   urgency: 'Urgency',
   room: 'Room',
 
@@ -74,5 +75,27 @@ export default {
 
   // History
   patientHistory: 'Patient History',
-  time: 'Time'
+  time: 'Time',
+
+  // Settings
+  changePassword: 'Change Password',
+  oldPassword: 'Old password',
+  newPassword: 'New password',
+  change: 'Change',
+  changeLanguage: 'Change Language',
+  deviceSettings: 'Device Settings',
+  openDevice: 'Open Device Settings',
+
+  // Device View
+  device: 'Device',
+  deviceName: 'Device name',
+  ambulance: 'Ambulance',
+  connectionStable: 'Connection stable',
+  noConnection: 'No connection',
+  addDevice: 'Add device',
+
+  // Feedback
+  patientAdded: 'Patient was added successfully.',
+  patientAddError: 'Error trying to add patient.',
+  cancelled: 'Cancelled.'
 };

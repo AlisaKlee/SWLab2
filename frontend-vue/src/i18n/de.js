@@ -30,12 +30,14 @@ export default {
   genderFemale: 'Weiblich',
   genderOther: 'Divers',
   preExistingCondition: 'Vorerkrankung',
+  preExistingMedication: 'Vormedikation',
   medication: 'Medikation',
   saveChanges: 'Änderungen speichern',
   editPatientData: 'Patientendaten bearbeiten',
   update: 'Aktualisieren',
   reset: 'Zurücksetzen',
   selectUrgency: 'Dringlichkeit wählen',
+  description: 'Beschreibung',
 
   // Patient Details
   patientDetails: 'Patientendetails',
@@ -60,7 +62,6 @@ export default {
   patientList: 'Patientenliste',
   patientName: 'Patientenname',
   treating: 'Behandelnder Arzt',
-  description: 'Beschreibung',
   urgency: 'Dringlichkeit',
   room: 'Raum',
 
@@ -74,5 +75,27 @@ export default {
 
   // History
   patientHistory: 'Patientenverlauf',
-  time: 'Zeit'
+  time: 'Zeit',
+
+  // Settings
+  changePassword: 'Passwort ändern',
+  oldPassword: 'Altes Passwort',
+  newPassword: 'Neues Passwort',
+  change: 'Ändern',
+  changeLanguage: 'Sprache ändern',
+  deviceSettings: 'Geräteeinstellungen',
+  openDevice: 'Gerät öffnen',
+
+  // Device View
+  device: 'Gerät',
+  deviceName: 'Gerätename',
+  ambulance: 'Ambulanz',
+  connectionStable: 'Verbindung stabil',
+  noConnection: 'Keine Verbindung',
+  addDevice: 'Gerät hinzufügen',
+
+  // Feedback
+  patientAdded: 'Patient wurde erfolgreich hinzugefügt.',
+  patientAddError: 'Fehler beim Hinzufügen des Patienten.',
+  cancelled: 'Abgebrochen.'
 };

@@ -48,13 +48,13 @@ import { useRouter } from 'vue-router';
 
 const router = useRouter();
 
-const rooms = ['A01', 'B02', 'C05', 'D10', 'E12', 'F01'];
+const rooms = ['1', '2','3','4', '5', 'D10', '12', '13','14'];
 
 const patients = ref([
-  { name: 'Max Mustermann', doctor: 'Dr. Schmidt', description: 'descSevereTrauma', urgency: 'Immediate', room: 'A01' },
-  { name: 'Laura Köhler', doctor: 'Dr. Haug', description: 'descHeadInjury', urgency: 'VeryUrgent', room: 'B02' },
-  { name: 'Sarah Mayer', doctor: 'Dr. Schmidt', description: 'descArmFracture', urgency: 'Urgent', room: 'C05' },
-  { name: 'Tom Maier', doctor: 'Dr. Torres', description: 'descFlu', urgency: 'Normal', room: 'D10' },
+  { name: 'Alisa Kleemann', doctor: 'Dr. Schmidt', description: 'descSevereTrauma', urgency: 'Immediate', room: 'A01' },
+  { name: 'xyz', doctor: 'Dr. Haug', description: 'descHeadInjury', urgency: 'VeryUrgent', room: 'B02' },
+  { name: 'Alice Fleischer', doctor: 'Dr. Schmidt', description: 'descArmFracture', urgency: 'Urgent', room: 'C05' },
+  { name: 'Lilli Gabler', doctor: 'Dr. Torres', description: 'descFlu', urgency: 'Normal', room: 'D10' },
   { name: 'Lisa Kurz', doctor: 'Dr. Walter', description: 'descDiscomfort', urgency: 'NonUrgent', room: 'E12' },
   { name: 'Hildegard Slotta', doctor: 'Dr. Torres', description: 'descDeceased', urgency: 'PassedAway', room: '—' }
 ]);

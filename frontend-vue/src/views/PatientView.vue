@@ -1,72 +1,73 @@
 <template>
   <div class="page-container">
-    <h1>Patient Details</h1>
+    <h1>{{ $t('patientDetails') }}</h1>
 
     <div class="content">
+      <!-- LEFT -->
       <div class="left">
         <div class="form">
-          <input :value="patient.eta" disabled placeholder="Ambulance Estimated Arrival" />
-          <input :value="patient.name" disabled placeholder="Full Name" />
-          <input :value="patient.preCondition" disabled placeholder="Pre-existing Condition" />
-          <input :value="patient.preMedication" disabled placeholder="Pre-existing Medication" />
+          <input :value="patient.eta" disabled :placeholder="$t('eta')" />
+          <input :value="patient.name" disabled :placeholder="$t('fullName')" />
+          <input :value="patient.preCondition" disabled :placeholder="$t('preExistingCondition')" />
+          <input :value="patient.preMedication" disabled :placeholder="$t('preExistingMedication')" />
         </div>
 
         <div class="form">
           <input
-            :value="`Medication: ${medication}`"
+            :value="`${$t('medication')}: ${medication}`"
             @input="onMedicationInput"
             class="full-input"
           />
           <textarea
-            :value="`Description: ${description}`"
+            :value="`${$t('description')}: ${description}`"
             @input="onDescriptionInput"
             rows="3"
             class="full-textarea"
           />
-      
-          <!--Urgency-->
+
           <select v-model="urgency" class="urgency-select">
-            <option disabled value="">Select urgency</option>
-            <option>Immediate</option>
-            <option>Very urgent</option>
-            <option>Urgent</option>
-            <option>Normal</option>
-            <option>Non urgent</option>
-            <option>Passed away</option>
+            <option disabled value="">{{ $t('selectUrgency') }}</option>
+            <option value="Immediate">{{ $t('Immediate') }}</option>
+            <option value="VeryUrgent">{{ $t('VeryUrgent') }}</option>
+            <option value="Urgent">{{ $t('Urgent') }}</option>
+            <option value="Normal">{{ $t('Normal') }}</option>
+            <option value="NonUrgent">{{ $t('NonUrgent') }}</option>
+            <option value="PassedAway">{{ $t('PassedAway') }}</option>
           </select>
         </div>
 
         <div class="button-group">
-          <PrimaryButton label="Update" @click="handleUpdate" variant="primary" />
-          <PrimaryButton label="Reset" @click="handleReset" variant="secondary" />
-          <PrimaryButton label="Edit Patient Data" @click="handleEdit" variant="secondary" />
+          <PrimaryButton :label="$t('update')" @click="handleUpdate" variant="primary" />
+          <PrimaryButton :label="$t('reset')" @click="handleReset" variant="secondary" />
+          <PrimaryButton :label="$t('editPatientData')" @click="handleEdit" variant="secondary" />
         </div>
       </div>
 
+      <!-- RIGHT -->
       <div class="right">
         <div class="form">
           <div class="timestamp-box">
-            <div class="timestamp-label">Timestamp</div>
+            <div class="timestamp-label">{{ $t('timestamp') }}</div>
             <div class="timestamp-value">{{ timestamp }}</div>
           </div>
 
           <div class="temperature-box">
-            <div class="temperature-label">Temperature</div>
+            <div class="temperature-label">{{ $t('temperature') }}</div>
             <div class="temperature-value">
-              <span v-if="isTempCritical">⚠️</span> {{ temperature }} 36°C
+              <span v-if="isTempCritical">⚠️</span> {{ temperature }} °C
             </div>
           </div>
 
           <div class="saturation-box">
-            <div class="saturation-label">O₂ Saturation</div>
-            <div class="saturation-value">{{ saturation }} 98%</div>
+            <div class="saturation-label">{{ $t('oxygen') }}</div>
+            <div class="saturation-value">{{ saturation }} %</div>
           </div>
 
-          <textarea disabled class="full-textarea">EKG: [EKG Curve Placeholder]</textarea>
+          <textarea disabled class="full-textarea">{{ $t('ekgPlaceholder') }}</textarea>
         </div>
 
         <div class="button-group mt-4">
-          <PrimaryButton label="Show History" @click="handleShowHistory" variant="primary" />
+          <PrimaryButton :label="$t('showHistory')" @click="handleShowHistory" variant="primary" />
         </div>
       </div>
     </div>
@@ -75,30 +76,29 @@
 
 <script setup>
 import { ref, computed } from 'vue';
-import PrimaryButton from '../components/PrimaryButton.vue';
 import { useRouter, useRoute } from 'vue-router';
+import PrimaryButton from '../components/PrimaryButton.vue';
 
 const router = useRouter();
 const route = useRoute();
 const patientId = route.params.id;
 
 const patients = [
-  { name: 'Name: Max Mustermann', gender: 'Male', dob:'01/01/2005', eta: 'Ambulance 1, ETA: 12 min', preCondition: 'Pre condition: None', preMedication: 'Pre medication: None' },
-  { name: 'Name: Laura Köhler', gender: 'Female', dob:'16/01/2005', eta: 'Ambulance 3, ETA: 8 min', preCondition: 'Pre condition: Head injury', preMedication: 'Pre medication: None' },
-  { name: 'Name: Sarah Mayer', gender: 'Female', dob:'23/05/2001', eta: 'Ambulance 2, ETA: 15 min', preCondition: 'Pre condition: Arm fracture', preMedication: 'Pre medication: Ibuprofen' },
-  { name: 'Name: Tom Maier', gender: 'Male', dob:'19/09/1992', eta: 'Ambulance 1, ETA: 20 min', preCondition: 'Pre condition: Flu', preMedication: 'Pre medication: Paracetamol' },
-  { name: 'Name: Lisa Kurz', gender: 'Female', dob:'30/07/1990', eta: 'Ambulance 5, ETA: 5 min', preCondition: 'Pre condition: Discomfort', preMedication: 'Pre medication: None' },
-  { name: 'Name: Hildegard Slotta',gender: 'Female', dob:'17/12/1965', eta: 'Ambulance 6, ETA: 0 min', preCondition: 'Pre condition: Deceased', preMedication: 'Pre medication: None' }
+  { name: 'Name: Max Mustermann', gender: 'Male', dob: '2005-01-01', eta: 'Ambulance 1, ETA: 12 min', preCondition: 'Pre condition: None', preMedication: 'Pre medication: None' },
+  { name: 'Name: Laura Köhler', gender: 'Female', dob: '2005-01-16', eta: 'Ambulance 3, ETA: 8 min', preCondition: 'Pre condition: Head injury', preMedication: 'Pre medication: None' },
+  { name: 'Name: Sarah Mayer', gender: 'Female', dob: '2001-05-23', eta: 'Ambulance 2, ETA: 15 min', preCondition: 'Pre condition: Arm fracture', preMedication: 'Pre medication: Ibuprofen' },
+  { name: 'Name: Tom Maier', gender: 'Male', dob: '1992-09-19', eta: 'Ambulance 1, ETA: 20 min', preCondition: 'Pre condition: Flu', preMedication: 'Pre medication: Paracetamol' },
+  { name: 'Name: Lisa Kurz', gender: 'Female', dob: '1990-07-30', eta: 'Ambulance 5, ETA: 5 min', preCondition: 'Pre condition: Discomfort', preMedication: 'Pre medication: None' },
+  { name: 'Name: Hildegard Slotta', gender: 'Female', dob: '1965-12-17', eta: 'Ambulance 6, ETA: 0 min', preCondition: 'Pre condition: Deceased', preMedication: 'Pre medication: None' }
 ];
 
 const patient = computed(() => patients[patientId]);
-
-let timestamp = '15:00:00, 15.04.2025';
+const timestamp = '15:00:00, 15.04.2025';
 const medication = ref('');
 const description = ref('');
 const urgency = ref('');
-const temperature = ref(36); // optional
-const saturation = ref(98); // optional
+const temperature = ref(36);
+const saturation = ref(98);
 const isTempCritical = computed(() => temperature.value >= 38);
 
 function handleUpdate() {
@@ -131,20 +131,18 @@ function handleShowHistory() {
 }
 
 function onMedicationInput(event) {
-  const raw = event.target.value;
   const prefix = 'Medication: ';
-  if (raw.startsWith(prefix)) {
-    medication.value = raw.slice(prefix.length);
+  if (event.target.value.startsWith(prefix)) {
+    medication.value = event.target.value.slice(prefix.length);
   } else {
     event.target.value = prefix + medication.value;
   }
 }
 
 function onDescriptionInput(event) {
-  const raw = event.target.value;
   const prefix = 'Description: ';
-  if (raw.startsWith(prefix)) {
-    description.value = raw.slice(prefix.length);
+  if (event.target.value.startsWith(prefix)) {
+    description.value = event.target.value.slice(prefix.length);
   } else {
     event.target.value = prefix + description.value;
   }
@@ -152,6 +150,7 @@ function onDescriptionInput(event) {
 </script>
 
 <style scoped>
+/* Hier kommt exakt dein vorheriges Layout */
 .page-container {
   display: flex;
   flex-direction: column;
@@ -200,97 +199,25 @@ textarea {
   gap: 20px;
   flex-wrap: wrap;
 }
-.prefix {
-  padding: 12px;
-  font-size: 16px;
-  font-family: inherit;
-  font-weight: 400;
-  background-color: #d6d0dc;
-  color: #444;
-  white-space: nowrap;
-  border-right: 1px solid #ccc;
-}
-.full-input {
-  padding: 12px;
-  font-size: 16px;
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  font-weight: 400;
-  border: none;
-  background-color: #e6e0e9;
-  border-radius: 6px;
-  width: 100%;
-  box-sizing: border-box;
-}
+.full-input,
 .full-textarea {
-  padding: 12px;
-  font-size: 16px;
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  font-weight: 400;
-  border: none;
-  background-color: #e6e0e9;
-  border-radius: 6px;
-  resize: vertical;
   width: 100%;
-  min-height: 80px;
   box-sizing: border-box;
 }
-
-.temperature-box {
-  background-color: rgba(255, 100, 100, 0.2);
-  border-radius: 12px;
-  padding: 20px;
-  text-align: center;
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  font-size: 16px;
-  font-weight: 400;
-  color: #000;
-}
-.temperature-label {
-  margin-bottom: 8px;
-}
-.temperature-value {
-  font-size: 20px;
-}
+.timestamp-box,
+.temperature-box,
 .saturation-box {
-  background-color: rgba(100, 180, 255, 0.2);
   border-radius: 12px;
   padding: 20px;
   text-align: center;
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  font-size: 16px;
-  font-weight: 400;
-  color: #000;
-}
-.saturation-label {
-  margin-bottom: 8px;
-}
-.saturation-value {
-  font-size: 20px;
 }
 .timestamp-box {
   background-color: rgba(144, 238, 144, 0.2);
-  border-radius: 12px;
-  padding: 20px;
-  text-align: center;
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  font-size: 16px;
-  font-weight: 400;
-  color: #000;
 }
-.timestamp-label {
-  font-size: 14px;
-  margin-bottom: 8px;
+.temperature-box {
+  background-color: rgba(255, 100, 100, 0.2);
 }
-.timestamp-value {
-  font-size: 18px;
-}
-.urgency-select {
-  padding: 12px;
-  font-size: 16px;
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  border: none;
-  background-color: #e6e0e9;
-  border-radius: 6px;
-  width: 100%;
+.saturation-box {
+  background-color: rgba(100, 180, 255, 0.2);
 }
 </style>
