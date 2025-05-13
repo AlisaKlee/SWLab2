@@ -89,14 +89,8 @@ router.beforeEach((to, from, next) => {
   if (to.meta.requiresAuth && !isLoggedIn) {
     next('/');
   } else if (to.path === '/' && isLoggedIn) {
-    if (role === 'Doctor') {
-      next('/welcomeDoctorView');
-    } else if (role === 'Paramedic') {
-      next('/welcomeParamedicView');
-    } else {
-      localStorage.clear();
-      next('/');
-    }
+    localStorage.clear();
+    next();
   } else {
     next();
   }
