@@ -1,36 +1,35 @@
 <template>
   <div class="settings-view">
- 
-    <h2 class="main-title">Settings</h2>
+    <h2 class="main-title">{{ $t('settings') }}</h2>
 
     <section>
-      <h3 class="section-title">Change Password</h3>
+      <h3 class="section-title">{{ $t('changePassword') }}</h3>
       <input
         type="password"
         v-model="oldPassword"
-        placeholder="Old password"
+        :placeholder="$t('oldPassword')"
         class="input-field"
       />
       <input
         type="password"
         v-model="newPassword"
-        placeholder="New password"
+        :placeholder="$t('newPassword')"
         class="input-field"
       />
       <div class="button-group">
-        <button @click="changePassword" class="btn btn-primary">Change</button>
-        <button @click="cancelPasswordChange" class="btn btn-secondary">Cancel</button>
+        <button @click="changePassword" class="btn btn-primary">{{ $t('change') }}</button>
+        <button @click="cancelPasswordChange" class="btn btn-secondary">{{ $t('cancel') }}</button>
       </div>
     </section>
 
     <section>
-      <h3 class="section-title">Device Settings</h3>
-      <button @click="goToDevice" class="btn btn-primary">Open Device Settings</button>
+      <h3 class="section-title">{{ $t('deviceSettings') }}</h3>
+      <button @click="goToDevice" class="btn btn-primary">{{ $t('openDevice') }}</button>
     </section>
 
     <section>
-      <h3 class="section-title">Change Language</h3>
-      <select v-model="language" class="input-field">
+      <h3 class="section-title">{{ $t('changeLanguage') }}</h3>
+      <select v-model="language" class="input-field" @change="setLanguage">
         <option value="en">English</option>
         <option value="de">Deutsch</option>
       </select>
@@ -40,13 +39,16 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import { useRouter } from 'vue-router'; 
+import { useRouter } from 'vue-router';
+import { useI18n } from 'vue-i18n';
 
 const oldPassword = ref('');
 const newPassword = ref('');
-const language = ref('en');
 const currentTime = ref('');
 const router = useRouter();
+
+const { locale } = useI18n();
+const language = ref(locale.value);
 
 const changePassword = () => {
   alert('Password changed.');
@@ -61,7 +63,18 @@ const goToDevice = () => {
   router.push('/device');
 };
 
+const setLanguage = () => {
+  locale.value = language.value;
+  localStorage.setItem('lang', language.value);
+};
+
 onMounted(() => {
+  const saved = localStorage.getItem('lang');
+  if (saved) {
+    language.value = saved;
+    locale.value = saved;
+  }
+
   const now = new Date();
   currentTime.value = now.toLocaleString();
 });
@@ -76,7 +89,6 @@ onMounted(() => {
   position: relative;
 }
 
-/* Titel */
 .main-title {
   text-align: center;
   font-size: 2.5rem;

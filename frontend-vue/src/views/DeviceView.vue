@@ -1,17 +1,16 @@
 <template>
   <div class="device-container">
-    <!-- Titel -->
-    <h1 class="title">Device</h1>
+    <h1 class="title">{{ $t('device') }}</h1>
 
     <!-- Eingabefelder -->
     <div class="input-group">
-      <label class="input-label">Device name:</label>
-      <input v-model="deviceName" class="input-field" placeholder="Raspberry Pi (1)" />
+      <label class="input-label">{{ $t('deviceName') }}:</label>
+      <input v-model="deviceName" class="input-field" :placeholder="$t('deviceName')" />
     </div>
 
     <div class="input-group">
-      <label class="input-label">Ambulance:</label>
-      <input v-model="ambulanceNumber" class="input-field" placeholder="1" />
+      <label class="input-label">{{ $t('ambulance') }}:</label>
+      <input v-model="ambulanceNumber" class="input-field" :placeholder="$t('ambulance')" />
     </div>
 
     <!-- Verbindungsstatus -->
@@ -19,37 +18,34 @@
       class="status-badge"
       :class="connectionStatus === 'stable' ? 'status-stable' : 'status-lost'"
     >
-      {{ connectionStatus === 'stable' ? 'Connection stable' : 'No connection' }}
+      {{ connectionStatus === 'stable' ? $t('connectionStable') : $t('noConnection') }}
     </div>
 
     <!-- Buttons -->
     <div class="button-group">
-      <button class="btn btn-primary" @click="addDevice">Add device</button>
-      <button class="btn btn-secondary" @click="cancel">Cancel</button>
+      <button class="btn btn-primary" @click="addDevice">{{ $t('addDevice') }}</button>
+      <button class="btn btn-secondary" @click="cancel">{{ $t('cancel') }}</button>
     </div>
   </div>
 </template>
 
-<script>
-export default {
-  name: 'DeviceView',
-  data() {
-    return {
-      deviceName: '',
-      ambulanceNumber: '',
-      connectionStatus: 'stable'
-    };
-  },
-  methods: {
-    addDevice() {
-      console.log('Device added:', this.deviceName, this.ambulanceNumber);
-      alert('Device was added.');
-    },
-    cancel() {
-      this.deviceName = '';
-      this.ambulanceNumber = '';
-    }
-  }
+<script setup>
+import { ref } from 'vue';
+import { useI18n } from 'vue-i18n';
+
+const deviceName = ref('');
+const ambulanceNumber = ref('');
+const connectionStatus = ref('stable');
+
+const { t } = useI18n();
+
+const addDevice = () => {
+  alert(t('addDevice') + ': ' + deviceName.value + ', ' + ambulanceNumber.value);
+};
+
+const cancel = () => {
+  deviceName.value = '';
+  ambulanceNumber.value = '';
 };
 </script>
 

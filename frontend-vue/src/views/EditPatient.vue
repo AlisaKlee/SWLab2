@@ -1,45 +1,44 @@
 <template>
+  <div class="edit-wrapper">
+    <img src="../assets/HeartWareLogo.png" alt="HeartWare Logo" class="logo-top-right" />
+  </div>
+
   <div class="main-content">
-    <h1>Edit patient data</h1>
+    <h1>{{ $t('editPatientData') }}</h1>
 
     <div class="form-group">
-      <label>First name:</label>
+      <label>{{ $t('firstName') }}</label>
       <div class="input-wrapper">
         <input v-model="form.firstname" type="text" />
         <span class="clear-icon" @click="form.firstname = ''">✖</span>
       </div>
 
-      <label>Last name:</label>
+      <label>{{ $t('lastName') }}</label>
       <div class="input-wrapper">
         <input v-model="form.lastname" type="text" />
         <span class="clear-icon" @click="form.lastname = ''">✖</span>
       </div>
 
-      <label>Date of birth:</label>
+      <label>{{ $t('dateOfBirth') }}</label>
       <div class="input-wrapper">
-        <input
-          v-model="form.dob"
-          type="date"
-          :max="maxDate"
-          title="Select a valid birth date"
-        />
+        <input v-model="form.dob" type="date" :max="maxDate" />
         <span class="clear-icon" @click="form.dob = ''">✖</span>
       </div>
 
-      <label>Gender:</label>
+      <label>{{ $t('gender') }}</label>
       <select v-model="form.gender">
-        <option>Male</option>
-        <option>Female</option>
-        <option>Other</option>
+        <option>{{ $t('genderMale') }}</option>
+        <option>{{ $t('genderFemale') }}</option>
+        <option>{{ $t('genderOther') }}</option>
       </select>
 
-      <label>Pre-existing conditions:</label>
+      <label>{{ $t('preExistingCondition') }}</label>
       <div class="input-wrapper">
         <input v-model="form.conditions" type="text" />
         <span class="clear-icon" @click="form.conditions = ''">✖</span>
       </div>
 
-      <label>Medication:</label>
+      <label>{{ $t('medication') }}</label>
       <div class="input-wrapper">
         <input v-model="form.medication" type="text" />
         <span class="clear-icon" @click="form.medication = ''">✖</span>
@@ -47,8 +46,8 @@
     </div>
 
     <div class="button-group">
-      <button class="save-button" @click="handleSave">Save changes</button>
-      <button class="cancel-button" @click="handleCancel">Cancel</button>
+      <button class="save-button" @click="handleSave">{{ $t('saveChanges') }}</button>
+      <button class="cancel-button" @click="handleCancel">{{ $t('cancel') }}</button>
     </div>
   </div>
 </template>
@@ -56,7 +55,6 @@
 <script setup>
 import { reactive, toRaw, computed } from 'vue';
 import { useRoute } from 'vue-router';
-import router from '../router';
 
 const route = useRoute();
 
@@ -74,16 +72,7 @@ const form = reactive({ ...initialData });
 const maxDate = computed(() => new Date().toISOString().split('T')[0]);
 
 function handleSave() {
-  if (typeof patients !== 'undefined' && patients[patientIndex]) {
-    patients[patientIndex].name = `Name: ${form.firstname} ${form.lastname}`;
-    patients[patientIndex].dob = form.dob;
-    patients[patientIndex].gender = form.gender;
-    patients[patientIndex].conditions = `Pre-existing conditions: ${form.conditions}`;
-    patients[patientIndex].medication = `Medication: ${form.medication}`;
-    alert('Patient data was saved.');
-  } else {
-    alert('Patient not found.');
-  }
+  alert('Saved (mock only)');
 }
 
 function handleCancel() {
@@ -92,8 +81,17 @@ function handleCancel() {
 </script>
 
 <style scoped>
+.logo-top-right {
+  position: absolute;
+  top: 20px;
+  right: 100px;
+  width: 120px;
+  height: auto;
+  z-index: 10;
+  opacity: 0.95;
+}
+
 .main-content {
-  position: relative;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -101,7 +99,7 @@ function handleCancel() {
   margin: auto;
   max-width: 400px;
   width: 100%;
-  padding: 2rem;
+  padding-top: 120px;
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
 }
 
@@ -135,10 +133,6 @@ label {
   background-color: #e6e0e9;
   border: none;
   font-size: 16px;
-}
-
-input[type="date"] {
-  font-family: inherit;
 }
 
 .clear-icon {

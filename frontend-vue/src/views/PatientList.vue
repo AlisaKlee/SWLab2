@@ -1,35 +1,40 @@
 <template>
   <div class="list-container">
-    <!-- Titel -->
-    <h2 class="title">Patient List</h2>
+    <h2 class="title">{{ $t('patientList') }}</h2>
 
-    <!-- Tabelle -->
     <div class="table-wrapper">
       <table class="patient-table">
         <thead>
           <tr>
-            <th>Patient Name</th>
-            <th>Treating</th>
-            <th>Description</th>
-            <th>Urgency</th>
-            <th>Room</th>
+            <th>{{ $t('patientName') }}</th>
+            <th>{{ $t('treating') }}</th>
+            <th>{{ $t('description') }}</th>
+            <th>{{ $t('urgency') }}</th>
+            <th>{{ $t('room') }}</th>
           </tr>
         </thead>
         <tbody>
           <tr
             v-for="(patient, index) in patients"
-            :key="patient.name"
-            @click="goToHistory(patient, index)"
+            :key="index"
+            @click="goToPatient(index)"
             class="clickable-row"
           >
             <td>{{ patient.name }}</td>
             <td>{{ patient.doctor }}</td>
-            <td>{{ patient.description }}</td>
+            <td>{{ $t(patient.description) }}</td>
             <td>
               <span class="urgency-badge" :class="urgencyColor(patient.urgency)"></span>
-              {{ patient.urgency }}
+              {{ $t(patient.urgency) }}
             </td>
-            <td>{{ patient.room }}</td>
+            <!-- Room selection, click is stopped so it doesn't trigger row click -->
+            <td @click.stop>
+              <select v-model="patient.room" class="room-select">
+                <option v-for="room in rooms" :key="room" :value="room">
+                  {{ room }}
+                </option>
+              </select>
+            </td>
           </tr>
         </tbody>
       </table>
@@ -38,46 +43,41 @@
 </template>
 
 <script setup>
+import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
 
-const patients = [
-  { name: 'Max Mustermann', doctor: 'Dr. Schmidt', description: 'Severe trauma', urgency: 'Immediate', room: 'A01' },
-  { name: 'Laura Köhler', doctor: 'Dr. Haug', description: 'Head injury', urgency: 'Very Urgent', room: 'B02' },
-  { name: 'Sarah Mayer', doctor: 'Dr. Schmidt', description: 'Arm fracture', urgency: 'Urgent', room: 'C05' },
-  { name: 'Tom Maier', doctor: 'Dr. Torres', description: 'Flu symptoms', urgency: 'Normal', room: 'D10' },
-  { name: 'Lisa Kurz', doctor: 'Dr. Walter', description: 'Mild discomfort', urgency: 'Non Urgent', room: 'E12' },
-  { name: 'Hildegard Slotta', doctor: 'Dr. Torres', description: 'Death due to age', urgency: 'Passed Away', room: '—' }
-];
+const rooms = ['A01', 'B02', 'C05', 'D10', 'E12', 'F01'];
+
+const patients = ref([
+  { name: 'Max Mustermann', doctor: 'Dr. Schmidt', description: 'descSevereTrauma', urgency: 'Immediate', room: 'A01' },
+  { name: 'Laura Köhler', doctor: 'Dr. Haug', description: 'descHeadInjury', urgency: 'VeryUrgent', room: 'B02' },
+  { name: 'Sarah Mayer', doctor: 'Dr. Schmidt', description: 'descArmFracture', urgency: 'Urgent', room: 'C05' },
+  { name: 'Tom Maier', doctor: 'Dr. Torres', description: 'descFlu', urgency: 'Normal', room: 'D10' },
+  { name: 'Lisa Kurz', doctor: 'Dr. Walter', description: 'descDiscomfort', urgency: 'NonUrgent', room: 'E12' },
+  { name: 'Hildegard Slotta', doctor: 'Dr. Torres', description: 'descDeceased', urgency: 'PassedAway', room: '—' }
+]);
+
+const goToPatient = (index) => {
+  router.push(`/patients/${index}`);
+};
 
 const urgencyColor = (level) => {
   switch (level) {
-    case 'Immediate':
-      return 'triage-red';
-    case 'Very Urgent':
-      return 'triage-orange';
-    case 'Urgent':
-      return 'triage-yellow';
-    case 'Normal':
-      return 'triage-green';
-    case 'Non Urgent':
-      return 'triage-grey';
-    case 'Passed Away':
-      return 'triage-black';
-    default:
-      return '';
+    case 'Immediate': return 'triage-red';
+    case 'VeryUrgent': return 'triage-orange';
+    case 'Urgent': return 'triage-yellow';
+    case 'Normal': return 'triage-green';
+    case 'NonUrgent': return 'triage-grey';
+    case 'PassedAway': return 'triage-black';
+    default: return '';
   }
-};
-
-const goToHistory = (patient, index) => {
-  router.push(`/patients/${index}`);
 };
 </script>
 
 <style scoped>
 .list-container {
-  position: relative;
   padding: 2rem 3rem;
   display: flex;
   flex-direction: column;
@@ -91,7 +91,7 @@ const goToHistory = (patient, index) => {
 }
 
 .table-wrapper {
-  max-width: 900px;
+  max-width: 1200px;
   width: 100%;
   overflow-x: auto;
 }
@@ -102,9 +102,7 @@ const goToHistory = (patient, index) => {
   cursor: pointer;
 }
 
-/* Nur horizontale Linien */
-th,
-td {
+th, td {
   border: none;
   border-bottom: 1px solid #ccc;
   padding: 12px 16px;
@@ -120,7 +118,6 @@ th {
   background-color: #f0f8ff;
 }
 
-/* Farbpunkte */
 .urgency-badge {
   display: inline-block;
   width: 12px;
@@ -130,23 +127,19 @@ th {
   vertical-align: middle;
 }
 
-/* Triage-Farben */
-.triage-red {
-  background-color: #e53935;
+.room-select {
+  padding: 6px 10px;
+  font-size: 14px;
+  border-radius: 4px;
+  background-color: #f7f7f7;
+  border: 1px solid #ccc;
 }
-.triage-orange {
-  background-color: #fb8c00;
-}
-.triage-yellow {
-  background-color: #fdd835;
-}
-.triage-green {
-  background-color: #43a047;
-}
-.triage-grey {
-  background-color: #bdbdbd;
-}
-.triage-black {
-  background-color: #212121;
-}
+
+/* Triage Colors */
+.triage-red { background-color: #e53935; }
+.triage-orange { background-color: #fb8c00; }
+.triage-yellow { background-color: #fdd835; }
+.triage-green { background-color: #43a047; }
+.triage-grey { background-color: #bdbdbd; }
+.triage-black { background-color: #212121; }
 </style>
