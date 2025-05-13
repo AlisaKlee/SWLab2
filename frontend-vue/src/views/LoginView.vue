@@ -16,6 +16,10 @@
 
 <script>
 import PrimaryButton from '../components/PrimaryButton.vue';
+import { connectWebSocket } from '../services/websocketService.js';
+
+connectWebSocket(); 
+
 
 export default {
   name: "LoginView",
