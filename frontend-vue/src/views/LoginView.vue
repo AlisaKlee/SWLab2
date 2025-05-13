@@ -1,15 +1,15 @@
 <template>
   <div class="container">
-    <h1>HeartWare</h1>
+    <h1>{{ $t('HeartWare') }}</h1>
 
     <div class="form">
-      <input v-model="username" placeholder="Username" />
-      <input v-model="password" type="password" placeholder="Password" />
+      <input v-model="username" :placeholder="$t('username')" />
+      <input v-model="password" type="password" :placeholder="$t('password')" />
     </div>
 
     <div class="button-group">
-      <PrimaryButton label="Login" @click="handleLogin" variant="primary" />
-      <PrimaryButton label="Cancel" @click="handleCancel" variant="secondary" />
+      <PrimaryButton :label="$t('login')" @click="handleLogin" variant="primary" />
+      <PrimaryButton :label="$t('cancel')" @click="handleCancel" variant="secondary" />
     </div>
   </div>
 </template>
@@ -43,7 +43,7 @@ export default {
         localStorage.setItem("role", "Paramedic");
         this.$router.push("/welcomeParamedicView");
       } else {
-        alert("Invalid username or password.");
+        alert(this.$t('invalidLogin'));
       }
     },
     handleCancel() {

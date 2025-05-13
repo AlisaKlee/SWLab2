@@ -3,10 +3,10 @@
     <Sidebar />
 
     <div class="content">
-      <h1 class="title">Welcome Dr. Schmidt!</h1>
+      <h1 class="title">{{ $t('welcomeDoctor') }}</h1>
 
       <div class="form">
-        <input v-model="search" placeholder="Search for patient" />
+        <input v-model="search" :placeholder="$t('searchPatient')" />
         <ul v-if="search && filteredPatients.length" class="results-list">
           <li
             v-for="patient in filteredPatients"
@@ -20,8 +20,8 @@
       </div>
 
       <div class="button-group">
-        <PrimaryButton label="Show all patients" @click="showAllPatients" variant="primary" />
-        <PrimaryButton label="Add patient" @click="addPatient" variant="secondary" />
+        <PrimaryButton :label="$t('showAllPatients')" @click="showAllPatients" variant="primary" />
+        <PrimaryButton :label="$t('addPatient')" @click="addPatient" variant="secondary" />
       </div>
     </div>
   </div>
@@ -119,7 +119,6 @@ input {
   padding: 0;
   width: 300px;
   border: 1px solid #ccc;
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   background: white;
   border-radius: 6px;
   max-height: 200px;

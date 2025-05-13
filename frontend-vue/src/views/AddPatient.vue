@@ -1,29 +1,25 @@
 <template>
   <div class="container">
-    <!-- Title -->
-    <h1>Add Patient</h1>
+    <h1>{{ $t('addPatient') }}</h1>
 
-    <!-- Input fields -->
     <div class="form">
-      <input v-model="firstname" placeholder="First name" />
-      <input v-model="lastname" placeholder="Last name" />
-      <input v-model="dateOfBirth" type="date" :max="maxDate" placeholder="Date of birth" />
-      <input v-model="preExistingCondition" placeholder="Pre-existing condition" />
-      <input v-model="medication" placeholder="Medication" />
+      <input v-model="firstname" :placeholder="$t('firstName')" />
+      <input v-model="lastname" :placeholder="$t('lastName')" />
+      <input v-model="dateOfBirth" type="date" :max="maxDate" :placeholder="$t('dateOfBirth')" />
+      <input v-model="preExistingCondition" :placeholder="$t('preExistingCondition')" />
+      <input v-model="medication" :placeholder="$t('medication')" />
 
-      <!-- Dropdown Gender -->
       <select v-model="gender">
-        <option disabled value="">Please select gender</option>
-        <option>Male</option>
-        <option>Female</option>
-        <option>Other</option>
+        <option disabled value="">{{ $t('selectGender') }}</option>
+        <option>{{ $t('genderMale') }}</option>
+        <option>{{ $t('genderFemale') }}</option>
+        <option>{{ $t('genderOther') }}</option>
       </select>
     </div>
 
-    <!-- Buttons -->
     <div class="button-group">
-      <PrimaryButton label="Add" @click="handleAdd" variant="primary" />
-      <PrimaryButton label="Cancel" @click="handleCancel" variant="secondary" />
+      <PrimaryButton :label="$t('add')" @click="handleAdd" variant="primary" />
+      <PrimaryButton :label="$t('cancel')" @click="handleCancel" variant="secondary" />
     </div>
   </div>
 </template>
@@ -33,9 +29,7 @@ import PrimaryButton from '../components/PrimaryButton.vue';
 import axios from 'axios';
 
 export default {
-  components: {
-    PrimaryButton
-  },
+  components: { PrimaryButton },
   data() {
     return {
       firstname: '',
@@ -63,9 +57,8 @@ export default {
       };
 
       try {
-        const response = await axios.post('http://localhost:8080/api/patients', newPatient);
-        console.log('Added to Server:', response.data);
-        alert('Patient was added successfully!');
+        await axios.post('http://localhost:8080/api/patients', newPatient);
+        alert(this.$t('patientAdded'));
 
         this.firstname = '';
         this.lastname = '';
@@ -74,8 +67,7 @@ export default {
         this.preExistingCondition = '';
         this.medication = '';
       } catch (error) {
-        console.error('Error while trying to add patient', error);
-        alert('Error trying to add patient!');
+        alert(this.$t('patientAddError'));
       }
     },
     handleCancel() {
@@ -85,52 +77,8 @@ export default {
       this.gender = '';
       this.preExistingCondition = '';
       this.medication = '';
-      alert('Cancelled.');
+      alert(this.$t('cancelled'));
     }
   }
 };
 </script>
-
-<style scoped>
-.container {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 50px;
-}
-
-h1 {
-  font-size: 36px;
-  font-weight: bold;
-  margin-bottom: 40px;
-}
-
-.form {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  width: 300px;
-}
-
-input,
-select {
-  padding: 12px;
-  font-size: 16px;
-  border: none;
-  background-color: #e6e0e9;
-  border-radius: 6px;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-input[type="date"] {
-  font-family: inherit;
-}
-
-.button-group {
-  display: flex;
-  gap: 20px;
-  margin-top: 30px;
-}
-</style>
