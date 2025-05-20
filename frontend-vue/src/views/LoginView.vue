@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h1>{{ $t('HeartWare') }}</h1>
+    <h1>HeartWare</h1>
 
     <div class="form">
       <input v-model="username" :placeholder="$t('username')" />
