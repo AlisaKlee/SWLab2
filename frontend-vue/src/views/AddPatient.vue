@@ -18,7 +18,7 @@
 
       <!-- Dropdown Gender -->
       <select v-model="gender">
-        <option disabled value="">{{ $t('selectGender') }}</option>
+        <option disabled value="">{{ $t('Select gender') }}</option>
         <option>{{ $t('genderMale') }}</option>
         <option>{{ $t('genderFemale') }}</option>
         <option>{{ $t('genderOther') }}</option>
@@ -27,8 +27,8 @@
 
     <!-- Buttons -->
     <div class="button-group">
-      <PrimaryButton :label="$t('add')" @click="handleAdd" variant="primary" />
-      <PrimaryButton :label="$t('cancel')" @click="handleCancel" variant="secondary" />
+      <PrimaryButton :label="$t('Add')" @click="handleAdd" variant="primary" />
+      <PrimaryButton :label="$t('Cancel')" @click="handleCancel" variant="secondary" />
     </div>
   </div>
 </template>

@@ -12,6 +12,8 @@
       <label class="input-label">{{ $t('ambulance') }}:</label>
       <input v-model="ambulanceNumber" class="input-field" :placeholder="$t('ambulance')" />
     </div>
+    <p v-if="errorMessage" class="error-text">{{ errorMessage }}</p>
+
 
     <!-- Verbindungsstatus -->
     <div
@@ -36,11 +38,17 @@ import { useI18n } from 'vue-i18n';
 const deviceName = ref('');
 const ambulanceNumber = ref('');
 const connectionStatus = ref('stable');
+const errorMessage = ref('');
 
 const { t } = useI18n();
 
 const addDevice = () => {
-  alert(t('addDevice') + ': ' + deviceName.value + ', ' + ambulanceNumber.value);
+  if (!deviceName.value || !ambulanceNumber.value){
+    errorMessage.value = t('All fields must be filled in.');
+    return;
+  }
+    errorMessage.value = '';
+    alert(t('addDevice') + ': ' + deviceName.value + ', ' + ambulanceNumber.value);
 };
 
 const cancel = () => {
@@ -68,7 +76,7 @@ const cancel = () => {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.7rem;
   width: 300px;
 }
 
@@ -127,5 +135,13 @@ const cancel = () => {
 .btn-secondary {
   background-color: #e0e0e0;
   color: #000;
+}
+
+.error-text {
+  color: red;
+  font-size: 14px;
+  margin-top: 0.3rem;
+  margin-bottom: 0.3rem;
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
 }
 </style>

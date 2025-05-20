@@ -150,12 +150,12 @@ function onDescriptionInput(event) {
 </script>
 
 <style scoped>
-/* Hier kommt exakt dein vorheriges Layout */
 .page-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-top: 40px;
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
 }
 h1 {
   font-size: 36px;
