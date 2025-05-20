@@ -1,16 +1,25 @@
 <template>
   <div class="sidebar">
     <div class="icon-wrapper">
-      <button class="icon-link" @click="goBack" :title="$t('back')">
+      <!-- Zurück-Button nur anzeigen, wenn erlaubt -->
+      <button
+        v-if="!hideBackButton"
+        class="icon-link"
+        @click="goBack"
+        title="Zurück"
+      >
         <i class="pi pi-arrow-left text-2xl"></i>
       </button>
-      <button class="icon-link" @click="goHome" :title="$t('home')">
+
+      <button class="icon-link" @click="goHome" title="Home">
         <i class="pi pi-home text-2xl"></i>
       </button>
-      <router-link to="/settings" class="goSettings" :title="$t('settings')">
+
+      <router-link to="/settings" class="goSettings" title="Settings">
         <i class="pi pi-cog text-2xl"></i>
       </router-link>
-      <button class="icon-link" @click="logout" :title="$t('logout')">
+
+      <button class="icon-link" @click="logout" title="Logout">
         <i class="pi pi-sign-out text-2xl"></i>
       </button>
     </div>
@@ -18,11 +27,16 @@
 </template>
 
 <script setup>
-import { useRouter } from 'vue-router';
-import { useI18n } from 'vue-i18n';
+import { useRouter, useRoute } from 'vue-router';
+import { computed } from 'vue';
 
 const router = useRouter();
-const { t } = useI18n();
+const route = useRoute();
+
+// Liste der Pfade, bei denen kein Zurück-Button gezeigt werden soll
+const hideBackButton = computed(() =>
+  ['/', '/login', '/welcomeDoctorView', '/welcomeParamedicView'].includes(route.path)
+);
 
 const goBack = () => {
   router.back();
@@ -35,7 +49,7 @@ const goHome = () => {
   } else if (role === 'Paramedic') {
     router.push('/welcomeParamedicView');
   } else {
-    alert(t('invalidRole'));
+    alert('Keine gültige Rolle – bitte neu einloggen.');
     router.push('/');
   }
 };
