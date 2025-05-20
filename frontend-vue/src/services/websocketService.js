@@ -1,7 +1,8 @@
 let socket = null;
 
 export function connectWebSocket(onMessageCallback) {
-  socket = new WebSocket('ws://10.2.10.31:8080/ws/vitaldaten');
+  const url = import.meta.env.VITE_WEBSOCKET_URL || 'ws://localhost:8080/ws/vitaldaten'; // Stelle sicher, dass dies lokal ist
+  socket = new WebSocket(url);
 
   socket.onopen = () => {
     console.log('✅ WebSocket connected');

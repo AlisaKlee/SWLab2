@@ -18,9 +18,6 @@
 import PrimaryButton from '../components/PrimaryButton.vue';
 import { connectWebSocket } from '../services/websocketService.js';
 
-connectWebSocket(); 
-
-
 export default {
   name: "LoginView",
   components: {
@@ -32,22 +29,27 @@ export default {
       password: ""
     };
   },
-  created() {
-    localStorage.removeItem("session");
-    localStorage.removeItem("role");
+  mounted() {
+    // Aufruf der WebSocket-Verbindung beim Laden der Komponente
+    connectWebSocket(this.onMessageReceived);
   },
   methods: {
+    // Callback für den Empfang von WebSocket-Nachrichten
+    onMessageReceived(data) {
+      console.log('WebSocket Nachricht empfangen:', data);
+    },
     handleLogin() {
+      // Überprüfen der Anmeldedaten
       if (this.username === "Doctor" && this.password === "Doctor") {
         localStorage.setItem("session", "true");
         localStorage.setItem("role", "Doctor");
-        this.$router.push("/welcomeDoctorView");
+        this.$router.push("/welcomeDoctorView"); // Weiterleitung nach erfolgreichem Login
       } else if (this.username === "Paramedic" && this.password === "Paramedic") {
         localStorage.setItem("session", "true");
         localStorage.setItem("role", "Paramedic");
-        this.$router.push("/welcomeParamedicView");
+        this.$router.push("/welcomeParamedicView"); // Weiterleitung nach erfolgreichem Login
       } else {
-        alert(this.$t('invalidLogin'));
+        alert(this.$t('invalidLogin')); // Fehlermeldung bei falschen Anmeldedaten
       }
     },
     handleCancel() {

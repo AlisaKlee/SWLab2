@@ -15,6 +15,7 @@ export default {
 
   // Login
   loginTitel: 'HeartWare',
+  HeartWare: 'HeartWare',
   login: 'Login',
   cancel: 'Cancel',
   username: 'Username',
