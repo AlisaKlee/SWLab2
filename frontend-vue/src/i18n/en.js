@@ -22,6 +22,11 @@ export default {
   password: 'Password',
   invalidCredentials: 'Invalid username or password.',
 
+  // Ambulance allocation
+  selectAmbulance: "Select ambulance.",
+  ambulanceRequired: "Please select an ambulance before proceeding.",
+  ambulance: "Ambulance",
+
   // Add / Edit Patient
   firstName: 'First name',
   lastName: 'Last name',

@@ -88,12 +88,14 @@ const urgencyColor = (level) => {
   font-size: 28px;
   font-weight: bold;
   margin-bottom: 2rem;
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
 }
 
 .table-wrapper {
   max-width: 1200px;
   width: 100%;
   overflow-x: auto;
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
 }
 
 .patient-table {
