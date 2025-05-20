@@ -1,6 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router';
-
-
 import LoginView from '../views/LoginView.vue';
 import AddPatient from '../views/AddPatient.vue';
 import WelcomeDoctorView from '../views/WelcomeDoctorView.vue';
@@ -87,7 +85,7 @@ router.beforeEach((to, from, next) => {
   const role = localStorage.getItem('role');
   
   if (to.meta.requiresAuth && !isLoggedIn) {
-    next('/');
+    next('/'); // Weiterleitung zur Login-Seite, wenn keine Authentifizierung vorhanden ist
   } else if (to.path === '/' && isLoggedIn) {
     localStorage.clear();
     next();
