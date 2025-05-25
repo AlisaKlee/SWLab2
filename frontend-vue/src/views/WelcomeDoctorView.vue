@@ -21,7 +21,6 @@
 
       <div class="button-group">
         <PrimaryButton :label="$t('showAllPatients')" @click="showAllPatients" variant="primary" />
-        <PrimaryButton :label="$t('addPatient')" @click="addPatient" variant="secondary" />
       </div>
     </div>
   </div>
@@ -64,9 +63,6 @@ export default {
     showAllPatients() {
       this.$router.push('/patient-list');
     },
-    addPatient() {
-      this.$router.push('/add-patient');
-    }
   }
 };
 </script>
@@ -87,6 +83,7 @@ export default {
   align-items: center;
   justify-content: center;
   padding: 2rem;
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
 }
 
 .title {
