@@ -1,7 +1,7 @@
 let socket = null;
 
 export function connectWebSocket(onMessageCallback) {
-  const url = import.meta.env.VITE_WEBSOCKET_URL || 'https://alisaklee.github.io/SWLab2/'; // Stelle sicher, dass dies lokal ist
+  const url = 'wss://backend-baxl.onrender.com/ws/vitaldaten'; 
   socket = new WebSocket(url);
 
   socket.onopen = () => {
