@@ -98,6 +98,14 @@ export default {
   connectionStable: 'Verbindung stabil',
   noConnection: 'Keine Verbindung',
   addDevice: 'Gerät hinzufügen',
+  message: 'Alle Felder müssen zuerst ausgefüllt werden.',
+
+  // Add patient Device
+  SelectDevice: 'Gerät auswählen',
+  device1: 'Gerät 1',
+  device2: 'Gerät 2',
+  device3: 'Gerät 3',
+
 
   // Feedback
   patientAdded: 'Patient wurde erfolgreich hinzugefügt.',

@@ -1,5 +1,5 @@
 <template>
-  <div class="page-container">
+  <div class="page-container" v-if="patient">
     <h1>{{ $t('patientDetails') }}</h1>
 
     <div class="content">
@@ -7,19 +7,19 @@
       <div class="left">
         <div class="form">
           <input :value="patient.eta" disabled :placeholder="$t('eta')" />
-          <input :value="patient.name" disabled :placeholder="$t('fullName')" />
+          <input :value="`${$t('fullName')}: ${patient.name}`" disabled class="full-input" />
           <input :value="patient.preCondition" disabled :placeholder="$t('preExistingCondition')" />
           <input :value="patient.preMedication" disabled :placeholder="$t('preExistingMedication')" />
         </div>
 
         <div class="form">
           <input
-            :value="`${$t('medication')}: ${medication}`"
+            :value="`${medicationLabel}: ${medication}`"
             @input="onMedicationInput"
             class="full-input"
           />
           <textarea
-            :value="`${$t('description')}: ${description}`"
+            :value="`${descriptionLabel}: ${description}`"
             @input="onDescriptionInput"
             rows="3"
             class="full-textarea"
@@ -32,18 +32,21 @@
             <option value="Urgent">{{ $t('Urgent') }}</option>
             <option value="Normal">{{ $t('Normal') }}</option>
             <option value="NonUrgent">{{ $t('NonUrgent') }}</option>
+            <option value="Treated">{{ $t('Treated') }}</option>
             <option value="PassedAway">{{ $t('PassedAway') }}</option>
           </select>
         </div>
 
-        <div class="button-group">
+        <div class="button-row">
           <PrimaryButton :label="$t('update')" @click="handleUpdate" variant="primary" />
           <PrimaryButton :label="$t('reset')" @click="handleReset" variant="secondary" />
+        </div>
+
+        <div class="button-row">
           <PrimaryButton :label="$t('editPatientData')" @click="handleEdit" variant="secondary" />
         </div>
       </div>
 
-      <!-- RIGHT -->
       <div class="right">
         <div class="form">
           <div class="timestamp-box">
@@ -66,7 +69,7 @@
           <textarea disabled class="full-textarea">{{ $t('ekgPlaceholder') }}</textarea>
         </div>
 
-        <div class="button-group mt-4">
+        <div class="button-row mt-4">
           <PrimaryButton :label="$t('showHistory')" @click="handleShowHistory" variant="primary" />
         </div>
       </div>
@@ -77,51 +80,56 @@
 <script setup>
 import { ref, computed } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
+import { useI18n } from 'vue-i18n';
 import PrimaryButton from '../components/PrimaryButton.vue';
+import PatientService from '../services/PatientService.js';
+
+const { t } = useI18n();
 
 const router = useRouter();
 const route = useRoute();
-const patientId = route.params.id;
+const patientId = Number(route.params.id);
 
-const patients = [
-  { name: 'Name: Max Mustermann', gender: 'Male', dob: '2005-01-01', eta: 'Ambulance 1, ETA: 12 min', preCondition: 'Pre condition: None', preMedication: 'Pre medication: None' },
-  { name: 'Name: Laura Köhler', gender: 'Female', dob: '2005-01-16', eta: 'Ambulance 3, ETA: 8 min', preCondition: 'Pre condition: Head injury', preMedication: 'Pre medication: None' },
-  { name: 'Name: Sarah Mayer', gender: 'Female', dob: '2001-05-23', eta: 'Ambulance 2, ETA: 15 min', preCondition: 'Pre condition: Arm fracture', preMedication: 'Pre medication: Ibuprofen' },
-  { name: 'Name: Tom Maier', gender: 'Male', dob: '1992-09-19', eta: 'Ambulance 1, ETA: 20 min', preCondition: 'Pre condition: Flu', preMedication: 'Pre medication: Paracetamol' },
-  { name: 'Name: Lisa Kurz', gender: 'Female', dob: '1990-07-30', eta: 'Ambulance 5, ETA: 5 min', preCondition: 'Pre condition: Discomfort', preMedication: 'Pre medication: None' },
-  { name: 'Name: Hildegard Slotta', gender: 'Female', dob: '1965-12-17', eta: 'Ambulance 6, ETA: 0 min', preCondition: 'Pre condition: Deceased', preMedication: 'Pre medication: None' }
-];
-
-const patient = computed(() => patients[patientId]);
-const timestamp = '15:00:00, 15.04.2025';
+const patient = computed(() => PatientService.getPatientByIndex(patientId));
 const medication = ref('');
 const description = ref('');
-const urgency = ref('');
+const urgency = ref(patient.value?.urgency || '');
 const temperature = ref(36);
 const saturation = ref(98);
+const timestamp = '15:00:00, 15.04.2025';
 const isTempCritical = computed(() => temperature.value >= 38);
 
+const medicationLabel = t('medication');
+const descriptionLabel = t('description');
+
 function handleUpdate() {
-  alert('Patient data was updated.');
+  PatientService.updateUrgency(patientId, urgency.value);
+  alert('Patient updated.');
 }
 
 function handleReset() {
   medication.value = '';
   description.value = '';
-  urgency.value = '';
+  urgency.value = patient.value.urgency;
 }
 
 function handleEdit() {
+  if (!patient.value || !patient.value.name) return;
+
+  const nameParts = patient.value.name.trim().split(' ');
+  const firstname = nameParts[0] || '';
+  const lastname = nameParts.slice(1).join(' ') || '';
+
   router.push({
-    path: '/edit-patient',
+    name: 'EditPatient',
     query: {
       id: patientId,
-      firstname: patient.value.name.split(' ')[1],
-      lastname: patient.value.name.split(' ')[2],
-      dob: patient.value.dob,
-      gender: patient.value.gender,
-      medication: medication.value,
-      conditions: patient.value.preCondition.replace(/^Pre condition:\s*/, '') || ''
+      firstname,
+      lastname,
+      dob: patient.value.dob || '',
+      gender: patient.value.gender || '',
+      medication: medication.value || '',
+      conditions: (patient.value.preCondition || '').replace(/^Pre condition:\s*/, '')
     }
   });
 }
@@ -131,7 +139,7 @@ function handleShowHistory() {
 }
 
 function onMedicationInput(event) {
-  const prefix = 'Medication: ';
+  const prefix = medicationLabel + ': ';
   if (event.target.value.startsWith(prefix)) {
     medication.value = event.target.value.slice(prefix.length);
   } else {
@@ -140,7 +148,7 @@ function onMedicationInput(event) {
 }
 
 function onDescriptionInput(event) {
-  const prefix = 'Description: ';
+  const prefix = descriptionLabel + ': ';
   if (event.target.value.startsWith(prefix)) {
     description.value = event.target.value.slice(prefix.length);
   } else {
@@ -157,11 +165,13 @@ function onDescriptionInput(event) {
   margin-top: 40px;
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
 }
+
 h1 {
   font-size: 36px;
   font-weight: bold;
   margin-bottom: 40px;
 }
+
 .content {
   display: flex;
   gap: 80px;
@@ -169,6 +179,7 @@ h1 {
   width: 100%;
   max-width: 1100px;
 }
+
 .left,
 .right {
   display: flex;
@@ -176,11 +187,13 @@ h1 {
   gap: 30px;
   width: 320px;
 }
+
 .form {
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
+
 input,
 textarea,
 select {
@@ -191,19 +204,34 @@ select {
   border-radius: 6px;
   resize: none;
 }
+
 textarea {
   min-height: 80px;
 }
-.button-group {
+
+.button-row {
   display: flex;
+  flex-direction: row;
   gap: 20px;
-  flex-wrap: wrap;
+  justify-content: flex-start;
 }
+
 .full-input,
 .full-textarea {
   width: 100%;
   box-sizing: border-box;
 }
+
+.urgency-select {
+  width: 100%;
+  font-size: 16px;
+  padding: 12px;
+  background-color: #e6e0e9;
+  border-radius: 6px;
+  border: none;
+  box-sizing: border-box;
+}
+
 .timestamp-box,
 .temperature-box,
 .saturation-box {
@@ -211,12 +239,15 @@ textarea {
   padding: 20px;
   text-align: center;
 }
+
 .timestamp-box {
   background-color: rgba(144, 238, 144, 0.2);
 }
+
 .temperature-box {
   background-color: rgba(255, 100, 100, 0.2);
 }
+
 .saturation-box {
   background-color: rgba(100, 180, 255, 0.2);
 }

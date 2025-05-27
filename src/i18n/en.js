@@ -99,9 +99,17 @@ export default {
   connectionStable: 'Connection stable',
   noConnection: 'No connection',
   addDevice: 'Add device',
+  message: 'All fields must be filled in.',
+
+  // Add patient Device
+  SelectDevice: 'Select device',
+  device1: 'Device 1',
+  device2: 'Device 2',
+  device3: 'Device 3',
 
   // Feedback
   patientAdded: 'Patient was added successfully.',
   patientAddError: 'Error trying to add patient.',
   cancelled: 'Cancelled.'
+
 };

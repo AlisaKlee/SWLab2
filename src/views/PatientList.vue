@@ -27,7 +27,6 @@
               <span class="urgency-badge" :class="urgencyColor(patient.urgency)"></span>
               {{ $t(patient.urgency) }}
             </td>
-            <!-- Room selection, click is stopped so it doesn't trigger row click -->
             <td @click.stop>
               <select v-model="patient.room" class="room-select">
                 <option v-for="room in rooms" :key="room" :value="room">
@@ -43,21 +42,16 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
 import { useRouter } from 'vue-router';
+import { ref } from 'vue';
+import PatientService from '../services/PatientService.js'; // relative Pfad ohne @
 
 const router = useRouter();
 
-const rooms = ['1', '2','3','4', '5', 'D10', '12', '13','14'];
+const rooms = ['1', '2', '3', '4', '5', 'D10', '12', '13', '14'];
 
-const patients = ref([
-  { name: 'Alisa Kleemann', doctor: 'Dr. Schmidt', description: 'descSevereTrauma', urgency: 'Immediate', room: 'A01' },
-  { name: 'xyz', doctor: 'Dr. Haug', description: 'descHeadInjury', urgency: 'VeryUrgent', room: 'B02' },
-  { name: 'Alice Fleischer', doctor: 'Dr. Schmidt', description: 'descArmFracture', urgency: 'Urgent', room: 'C05' },
-  { name: 'Lilli Gabler', doctor: 'Dr. Torres', description: 'descFlu', urgency: 'Normal', room: 'D10' },
-  { name: 'Lisa Kurz', doctor: 'Dr. Walter', description: 'descDiscomfort', urgency: 'NonUrgent', room: 'E12' },
-  { name: 'Hildegard Slotta', doctor: 'Dr. Torres', description: 'descDeceased', urgency: 'PassedAway', room: '—' }
-]);
+// hole Patientenliste zentral aus Service
+const patients = ref(PatientService.getAllPatients());
 
 const goToPatient = (index) => {
   router.push(`/patients/${index}`);
@@ -70,6 +64,7 @@ const urgencyColor = (level) => {
     case 'Urgent': return 'triage-yellow';
     case 'Normal': return 'triage-green';
     case 'NonUrgent': return 'triage-grey';
+    case 'Treated': return 'triage-blue';
     case 'PassedAway': return 'triage-black';
     default: return '';
   }
@@ -143,5 +138,6 @@ th {
 .triage-yellow { background-color: #fdd835; }
 .triage-green { background-color: #43a047; }
 .triage-grey { background-color: #bdbdbd; }
+.triage-blue { background-color: steelblue; }
 .triage-black { background-color: #212121; }
 </style>

@@ -16,12 +16,20 @@
       <input v-model="preExistingCondition" :placeholder="$t('preExistingCondition')" />
       <input v-model="medication" :placeholder="$t('medication')" />
 
-      <!-- Dropdown Gender -->
+      <!-- Dropdown gender -->
       <select v-model="gender">
         <option disabled value="">{{ $t('Select gender') }}</option>
         <option>{{ $t('genderMale') }}</option>
         <option>{{ $t('genderFemale') }}</option>
         <option>{{ $t('genderOther') }}</option>
+      </select>
+
+      <!--Dropdown devices-->
+      <select v-model="device">
+        <option disabled value="">{{ $t('Select device') }}</option>
+        <option>{{ $t('device1') }}</option>
+        <option>{{ $t('device2') }}</option>
+        <option>{{ $t('device3') }}</option>
       </select>
     </div>
 
@@ -46,7 +54,8 @@ export default {
       dateOfBirth: '',
       gender: '',
       preExistingCondition: '',
-      medication: ''
+      medication: '', 
+      device: ''
     };
   },
   computed: {
@@ -62,7 +71,8 @@ export default {
         dateOfBirth: this.dateOfBirth,
         gender: this.gender,
         preExistingCondition: this.preExistingCondition,
-        medication: this.medication
+        medication: this.medication,
+        device: this.device
       };
 
       try {
@@ -86,6 +96,7 @@ export default {
       this.gender = '';
       this.preExistingCondition = '';
       this.medication = '';
+      this.device = '';
       alert(this.$t('cancelled'));
     }
   }
