@@ -1,8 +1,7 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 
-// https://vite.dev/config/
 export default defineConfig({
-  base: '/SWLab2/',
+  base: '/SWLab2/',  // ← GANZ WICHTIG: dein Repository-Name mit Slash vorne und hinten
   plugins: [vue()],
 })
