@@ -1,40 +1,49 @@
-let socket = null;
+import SockJS from 'sockjs-client';
+import { Client } from '@stomp/stompjs';
+
+let stompClient = null;
 
 export function connectWebSocket(onMessageCallback) {
-  const url = 'wss://backend-baxl.onrender.com/ws/vitaldaten';
-  socket = new WebSocket(url);
+  const socket = new SockJS('https://backend-baxl.onrender.com/ws/vitaldaten');
+  stompClient = new Client({
+    webSocketFactory: () => socket,
+    onConnect: () => {
+      console.log('✅ WebSocket connected (STOMP)');
 
-  socket.onopen = () => {
-    console.log('✅ WebSocket connected');
-    sendMessage({ type: "ping", content: "Test vom Frontend" });
-  };
+      // Empfangen von Nachrichten
+      stompClient.subscribe('/topic/vitaldaten', (message) => {
+        if (onMessageCallback) {
+          onMessageCallback(JSON.parse(message.body));
+        }
+      });
 
-  socket.onmessage = (event) => {
-    const data = JSON.parse(event.data);
-    if (onMessageCallback) {
-      onMessageCallback(data);
+      // Beispiel: beim Start gleich eine Nachricht senden
+      sendMessage({ content: 'Hallo vom Frontend!' });
+    },
+    onStompError: (frame) => {
+      console.error('STOMP error:', frame);
+    },
+    onDisconnect: () => {
+      console.log('❌ WebSocket disconnected');
     }
-  };
+  });
 
-  socket.onerror = (err) => {
-    console.error('WebSocket error', err);
-  };
-
-  socket.onclose = () => {
-    console.log('❌ WebSocket disconnected');
-  };
+  stompClient.activate();
 }
 
 export function sendMessage(payload) {
-  if (socket && socket.readyState === WebSocket.OPEN) {
-    socket.send(JSON.stringify(payload));
+  if (stompClient && stompClient.connected) {
+    stompClient.publish({
+      destination: '/app/send',
+      body: JSON.stringify(payload),
+    });
   } else {
-    console.warn('WebSocket not open');
+    console.warn('WebSocket not connected');
   }
 }
 
 export function closeWebSocket() {
-  if (socket) {
-    socket.close();
+  if (stompClient) {
+    stompClient.deactivate();
   }
 }
