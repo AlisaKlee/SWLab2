@@ -1,25 +1,24 @@
 <template>
   <div class="sidebar">
     <div class="icon-wrapper">
-      <!-- Zurück-Button nur anzeigen, wenn erlaubt -->
       <button
         v-if="!hideBackButton"
         class="icon-link"
         @click="goBack"
-        title="Zurück"
+        :title="$t('back')"
       >
         <i class="pi pi-arrow-left text-2xl"></i>
       </button>
 
-      <button class="icon-link" @click="goHome" title="Home">
+      <button class="icon-link" @click="goHome" :title="$t('home')">
         <i class="pi pi-home text-2xl"></i>
       </button>
 
-      <router-link to="/settings" class="goSettings" title="Settings">
+      <router-link to="/settings" class="goSettings" :title="$t('settings')">
         <i class="pi pi-cog text-2xl"></i>
       </router-link>
 
-      <button class="icon-link" @click="logout" title="Logout">
+      <button class="icon-link" @click="logout" :title="$t('logout')">
         <i class="pi pi-sign-out text-2xl"></i>
       </button>
     </div>

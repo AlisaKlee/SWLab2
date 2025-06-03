@@ -4,7 +4,7 @@ import { Client } from '@stomp/stompjs';
 let stompClient = null;
 
 export function connectWebSocket(onMessageCallback) {
-  const socket = new SockJS('https://backend-baxl.onrender.com/ws/vitaldaten');
+  const socket = new SockJS(import.meta.env.VITE_WEBSOCKET_URL);
   stompClient = new Client({
     webSocketFactory: () => socket,
     onConnect: () => {

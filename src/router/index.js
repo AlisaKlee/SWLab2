@@ -9,10 +9,10 @@ import SettingView from '../views/SettingView.vue';
 import DeviceView from '../views/DeviceView.vue';
 import PatientView from '../views/PatientView.vue';
 import EditPatient from '../views/EditPatient.vue';
-import PatientDetails from '../components/PatientDetails.vue';
 
 const routes = [
-  { path: '/', name: 'Login', component: LoginView },
+  { path: '/', redirect: '/login' },
+  { path: '/login', name: 'Login', component: LoginView },
   {
     path: '/welcomeDoctorView',
     name: 'WelcomeDoctor',
@@ -72,7 +72,8 @@ const routes = [
     name: 'Device',
     component: DeviceView,
     meta: { requiresAuth: true }
-  }
+  },
+  { path: '/:pathMatch(.*)*', redirect: '/login' } // Fallback
 ];
 
 const router = createRouter({
@@ -80,15 +81,12 @@ const router = createRouter({
   routes
 });
 
+// Navigation Guard
 router.beforeEach((to, from, next) => {
-  const isLoggedIn = localStorage.getItem('session') === 'true';
-  const role = localStorage.getItem('role');
-  
+  const isLoggedIn = !!localStorage.getItem('session');
+
   if (to.meta.requiresAuth && !isLoggedIn) {
-    next('/'); // Weiterleitung zur Login-Seite, wenn keine Authentifizierung vorhanden ist
-  } else if (to.path === '/' && isLoggedIn) {
-    localStorage.clear();
-    next();
+    next('/login');
   } else {
     next();
   }

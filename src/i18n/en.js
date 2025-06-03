@@ -78,17 +78,31 @@ export default {
   descFlu: 'Flu symptoms',
   descDiscomfort: 'Mild discomfort',
   descDeceased: 'Deceased (due to age)',
+  descBurnInjury: 'Severe burn injury',
+  descHeartAttack: 'Heart attack',
+  descSevereBleeding: 'Severe bleeding',
+  descChestPain: 'Chest pain',
+  descSevereAllergy: 'Severe allergic reaction',
+  descAnkleSprain: 'Sprained ankle',
+  descCold: 'Common cold',
+  descSoreThroat: 'Sore throat',
+  descMildCough: 'Mild cough',
+  descRoutineCheck: 'Routine check-up',
+  descTreatedWound: 'Treated wound',
+  descObservation: 'Under observation',
+  descPostOp: 'Post-operative care',
 
   // History
   patientHistory: 'Patient History',
   time: 'Time',
+  ekgCurve: 'ECG Curve',
 
   // Settings
   changePassword: 'Change Password',
   oldPassword: 'Old password',
   newPassword: 'New password',
   change: 'Change',
-  changeLanguage: 'Change Language',
+  changeLanguage: 'select Language',
   deviceSettings: 'Device Settings',
   openDevice: 'Open Device Settings',
 
@@ -99,17 +113,16 @@ export default {
   connectionStable: 'Connection stable',
   noConnection: 'No connection',
   addDevice: 'Add device',
-  message: 'All fields must be filled in.',
-
-  // Add patient Device
-  SelectDevice: 'Select device',
-  device1: 'Device 1',
-  device2: 'Device 2',
-  device3: 'Device 3',
+  message: 'Please fill out all fields.',
 
   // Feedback
   patientAdded: 'Patient was added successfully.',
   patientAddError: 'Error trying to add patient.',
-  cancelled: 'Cancelled.'
+  cancelled: 'Cancelled.',
 
+  // Sidebar
+  back: 'Back',
+  home: 'Home',
+  settings: 'Settings',
+  logout: 'Logout'
 };

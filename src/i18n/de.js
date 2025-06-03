@@ -71,16 +71,30 @@ export default {
   room: 'Raum',
 
   // Patient Descriptions
-  descSevereTrauma: 'Schweres Trauma',
+   descSevereTrauma: 'Schweres Trauma',
   descHeadInjury: 'Kopfverletzung',
   descArmFracture: 'Armfraktur',
   descFlu: 'Grippesymptome',
   descDiscomfort: 'Leichtes Unwohlsein',
-  descDeceased: 'Verstorben (altersbedingt)',
+  descDeceased: 'Verstorben',
+  descBurnInjury: 'Schwere Verbrennung',
+  descHeartAttack: 'Herzinfarkt',
+  descSevereBleeding: 'Starke Blutung',
+  descChestPain: 'Brustschmerzen',
+  descSevereAllergy: 'Starke allergische Reaktion',
+  descAnkleSprain: 'Verstauchter Knöchel',
+  descCold: 'Erkältung',
+  descSoreThroat: 'Halsschmerzen',
+  descMildCough: 'Leichter Husten',
+  descRoutineCheck: 'Routineuntersuchung',
+  descTreatedWound: 'Behandelte Wunde',
+  descObservation: 'Beobachtung',
+  descPostOp: 'Nachoperation',
 
   // History
   patientHistory: 'Patientenverlauf',
   time: 'Zeit',
+  ekgCurve: 'EKG-Kurve',
 
   // Settings
   changePassword: 'Passwort ändern',
@@ -98,17 +112,16 @@ export default {
   connectionStable: 'Verbindung stabil',
   noConnection: 'Keine Verbindung',
   addDevice: 'Gerät hinzufügen',
-  message: 'Alle Felder müssen zuerst ausgefüllt werden.',
-
-  // Add patient Device
-  SelectDevice: 'Gerät auswählen',
-  device1: 'Gerät 1',
-  device2: 'Gerät 2',
-  device3: 'Gerät 3',
-
+  message: 'Bitte fülle alle Felder aus.',
 
   // Feedback
   patientAdded: 'Patient wurde erfolgreich hinzugefügt.',
   patientAddError: 'Fehler beim Hinzufügen des Patienten.',
-  cancelled: 'Abgebrochen.'
+  cancelled: 'Abgebrochen.',
+
+  // Sidebar
+  back: 'Zurück',
+  home: 'Startseite',
+  settings: 'Einstellungen',
+  logout: 'Abmelden'
 };

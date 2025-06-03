@@ -37,16 +37,17 @@
           </select>
         </div>
 
+        <!-- Buttons -->
         <div class="button-row">
           <PrimaryButton :label="$t('update')" @click="handleUpdate" variant="primary" />
           <PrimaryButton :label="$t('reset')" @click="handleReset" variant="secondary" />
         </div>
-
-        <div class="button-row">
+        <div class="button-single">
           <PrimaryButton :label="$t('editPatientData')" @click="handleEdit" variant="secondary" />
         </div>
       </div>
 
+      <!-- RIGHT -->
       <div class="right">
         <div class="form">
           <div class="timestamp-box">
@@ -99,8 +100,8 @@ const saturation = ref(98);
 const timestamp = '15:00:00, 15.04.2025';
 const isTempCritical = computed(() => temperature.value >= 38);
 
-const medicationLabel = t('medication');
-const descriptionLabel = t('description');
+const medicationLabel = 'Medication';
+const descriptionLabel = 'Description';
 
 function handleUpdate() {
   PatientService.updateUrgency(patientId, urgency.value);
@@ -209,13 +210,6 @@ textarea {
   min-height: 80px;
 }
 
-.button-row {
-  display: flex;
-  flex-direction: row;
-  gap: 20px;
-  justify-content: flex-start;
-}
-
 .full-input,
 .full-textarea {
   width: 100%;
@@ -230,6 +224,17 @@ textarea {
   border-radius: 6px;
   border: none;
   box-sizing: border-box;
+}
+
+/* Optimierte Button-Gruppierung */
+.button-row {
+  display: flex;
+  gap: 12px;
+  margin-top: 1rem;
+}
+
+.button-single {
+  margin-top: 0.5rem;
 }
 
 .timestamp-box,

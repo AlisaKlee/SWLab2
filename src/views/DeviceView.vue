@@ -44,7 +44,7 @@ const { t } = useI18n();
 
 const addDevice = () => {
   if (!deviceName.value || !ambulanceNumber.value){
-    errorMessage.value = t('All fields must be filled in.');
+    errorMessage.value = t('message');
     return;
   }
     errorMessage.value = '';

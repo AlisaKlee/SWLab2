@@ -2,29 +2,31 @@
   <div class="history-container">
     <h1 class="title">{{ $t('patientHistory') }}</h1>
 
-    <!-- Vitaldaten -->
-    <table class="patient-table">
-      <thead>
-        <tr>
-          <th>{{ $t('time') }}</th>
-          <th>{{ $t('oxygen') }}</th>
-          <th>{{ $t('temperature') }}</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="entry in history" :key="entry.time">
-          <td>{{ entry.time }}</td>
-          <td>{{ entry.oxygen }}</td>
-          <td>{{ entry.temperature }}</td>
-        </tr>
-      </tbody>
-    </table>
+    <!-- Scrollbarer Vitaldaten-Bereich -->
+    <div class="table-wrapper">
+      <table class="patient-table">
+        <thead>
+          <tr>
+            <th>{{ $t('time') }}</th>
+            <th>{{ $t('oxygen') }}</th>
+            <th>{{ $t('temperature') }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="entry in history" :key="entry.time">
+            <td>{{ entry.time }}</td>
+            <td>{{ entry.oxygen }}</td>
+            <td>{{ entry.temperature }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
     <!-- EKG-Kurve -->
     <div class="ekg-section">
-      <h2 class="ekg-title">EKG-Kurve</h2>
+      <h2 class="ekg-title">{{ $t('ekgCurve') }}</h2>
       <div class="ekg-placeholder">
-        [Platzhalter für EKG-Kurve]
+        [{{ $t('ekgPlaceholder') }}]
       </div>
     </div>
   </div>
@@ -36,7 +38,14 @@ const history = [
   { time: '15:07:46', oxygen: '98%', temperature: '40°C' },
   { time: '15:09:12', oxygen: '97%', temperature: '41°C' },
   { time: '15:11:34', oxygen: '95%', temperature: '41.5°C' },
-  { time: '15:23:45', oxygen: '98%', temperature: '40.5°C' }
+  { time: '15:23:45', oxygen: '98%', temperature: '40.5°C' },
+  { time: '15:24:12', oxygen: '96%', temperature: '40.2°C' },
+  { time: '15:25:37', oxygen: '97%', temperature: '39.9°C' },
+  { time: '15:26:49', oxygen: '95%', temperature: '40.1°C' },
+  { time: '15:28:03', oxygen: '98%', temperature: '40°C' },
+  { time: '15:29:25', oxygen: '94%', temperature: '40.3°C' },
+  { time: '15:30:10', oxygen: '96%', temperature: '39.8°C' },
+  { time: '15:31:54', oxygen: '97%', temperature: '40.0°C' }
 ];
 </script>
 
@@ -55,10 +64,16 @@ const history = [
   text-align: center;
 }
 
+.table-wrapper {
+  max-height: 300px;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
 .patient-table {
   width: 100%;
   border-collapse: collapse;
-  margin-bottom: 2rem;
 }
 
 .patient-table th,
@@ -70,6 +85,9 @@ const history = [
 
 .patient-table th {
   background-color: #f3f3f3;
+  position: sticky;
+  top: 0;
+  z-index: 1;
 }
 
 .ekg-section {
